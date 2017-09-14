@@ -1,0 +1,272 @@
+<if condition = "$ischannel eq 1">
+    <include file="Public/header" />
+</if>
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+    <if condition = "$ischannel neq 1">
+        <include file="Public/breadcrumb"/>
+    </if>
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <if condition = "$ischannel neq 1">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            </if>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        <if condition = "$ischannel eq 1">
+                            {$ischannelname}渠道信息
+                        <else />
+                            渠道列表
+                        </if>
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                            <if condition = "$ischannel eq 1">
+                                <label class="control-label" for="input-order-id">结算业务于渠道管理员线下沟通进行结算，暂不提供线上结算业务！</label>
+                                <input type="hidden" name="ischannel" value="{$ischannel}" >
+
+                                <a href="{:U('Admin/Channel/showChannelInfo',array('id' => $channelid))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情" target="rightContent">
+                                    <span>查看信息</span>
+                                </a>
+                            <else />
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">关键词</label>
+                                    <div class="input-group">
+                                        <input type="text" name="key_word" value="" placeholder="渠道名称" id="input-order-id" class="form-control">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="orderby1" value="articleid" />
+                                <input type="hidden" name="orderby2" value="desc" />
+
+                                <button type="submit" onclick="ajax_get_table('search-form2',1,0)" id="button-filter search-order" class="btn btn-primary">
+                                    <i class="fa fa-search"></i> 筛选
+                                </button>
+
+                                <button type="button" onclick="location.href='{:U('Admin/Channel/addEditChannel',array('action' => 'add'))}'" class="btn btn-primary pull-right">
+                                    <i class="fa fa-plus"></i>添加新渠道
+                                </button>
+                            </if>
+                        </form>
+                    </div>
+                    <div id="ajax_return"></div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <if condition = "$ischannel eq 1">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>
+                            {$channel.channelname}渠道信息
+                        </h3>
+                    </div>
+                </if>
+                <div class="panel-body">
+                    <if condition="$ischannel eq 1">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                渠道充值信息
+                            </h3>
+
+                            <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="hidden" name="key_word" value="{$channel.channelname}" id="input-order-id" class="form-control">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="orderby1" value="channelid" />
+                                <input type="hidden" name="orderby2" value="desc" />
+                            </form>
+                        </div>
+
+                        <div id="ajax_return_paylog"></div>
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                渠道用户信息
+                            </h3>
+                        </div>
+
+                        <div id="ajax_return_userinfo"></div>
+                    </if>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    $(document).ready(function()
+    {
+        // ajax 加载商品列表
+        ajax_get_table('search-form2',1);
+
+        ajax_get_paylog('search-form2',1);
+
+        ajax_get_userinfo('search-form2',1);
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,page,ischannel)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+        {
+            type    : "POST",
+            url     : "./index.php?m=Admin&c=Channel&a=ajaxChannelList&p="+page,
+            data    : $('#' + form).serialize(),// 你的formid
+            success : function(data)
+            {
+                $("#ajax_return").html('');
+
+                $("#ajax_return").append(data);
+            },
+            error   : function(data)
+            {
+                alert('error -- data = ' + data.responseText);
+            }
+        });
+    }
+
+    // 删除操作
+    function del(id)
+    {
+        if(!confirm('确定要删除吗?'))
+        {
+            return false;
+        }
+
+        $.ajax(
+        {
+            url     : "/index.php?m=Admin&c=Channel&a=delChannel&id="+id,
+            success : function(v)
+            {
+                var v =  eval('('+v+')');
+
+                if(v.hasOwnProperty('status') && (v.status == 1))
+                {
+                    ajax_get_table('search-form2',cur_page);
+                }
+                else
+                {
+                    layer.msg(v.msg, {icon: 2,time: 1000}); //alert(v.msg);
+                }
+            }
+        });
+
+        return false;
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_paylog(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=User&a=ajaxChannelPayLogList&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_paylog").html('');
+
+                    $("#ajax_return_paylog").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_buyinfo(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=BookSale&a=ajaxBookSaleListByChannelID&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_buyinfo").html('');
+
+                    $("#ajax_return_buyinfo").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_useraccessslog(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=User&a=ajaxChannelUserAccessLog&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_useraccessslog").html('');
+
+                    $("#ajax_return_useraccessslog").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_userinfo(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=User&a=ajaxChannelUserList&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_userinfo").html('');
+
+                    $("#ajax_return_userinfo").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+</script>
+</body>
+</html>

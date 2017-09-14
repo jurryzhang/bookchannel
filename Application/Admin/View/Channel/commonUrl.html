@@ -1,0 +1,117 @@
+
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+    <if condition = "$ischannel neq 1">
+        <include file="Public/breadcrumb"/>
+    </if>
+
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+
+    <form id="search-form2">
+        <input  type="hidden" name="channelid" value="{$channelid}">
+    </form>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <if condition = "$ischannel neq 1">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            </if>
+
+            <div class="panel panel-default">
+                <if condition = "$Think.cookie.permissions eq 0">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>
+                            常用链接
+                        </h3>
+                    </div>
+                </if>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" style="font-size:15px;">
+                            <tbody>
+                                <tr>
+                                    <td class="text-left" style="padding: 20px 100px;">
+                                        <span>书城首页</span>
+                                        <span id="url_A" data-clipboard-target="#url_A">http://wap.kyread.com/Index/index/cid/{$channelid}.html</span>
+                                        <i class="fa fa-copy" id="copy_A" data-clipboard-target="#url_A" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" style="padding: 20px 100px;">
+                                        <span>主编强推</span>
+                                        <span id="url_B" data-clipboard-target="#url_B">http://wap.kyread.com/Index/getHotCommendBookList/show_id/4/cid/{$channelid}.html</span>
+                                        <i class="fa fa-copy" id="copy_B" data-clipboard-target="#url_B" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" style="padding: 20px 100px;">
+                                        <span>免费专区</span>
+                                        <span id="url_C" data-clipboard-target="#url_C">http://wap.kyread.com/Index/freeLimitBookList/cid/{$channelid}.html</span>
+                                        <i class="fa fa-copy" id="copy_C" data-clipboard-target="#url_C" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" style="padding: 20px 100px;">
+                                        <span>阅读记录</span>
+                                        <span id="url_D" data-clipboard-target="#url_D">http://wap.kyread.com/User/getBookCase/cid/{$channelid}.html</span>
+                                        <i class="fa fa-copy" id="copy_D" data-clipboard-target="#url_D" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" style="padding: 20px 100px;">
+                                        <span>我要充值</span>
+                                        <span id="url_E" data-clipboard-target="#url_E">http://wap.kyread.com/User/buyEgold/cid/{$channelid}.html</span>
+                                        <i class="fa fa-copy" id="copy_E" data-clipboard-target="#url_E" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" style="padding: 20px 100px;">
+                                        <span>免费书币</span>
+                                        <span id="url_F" data-clipboard-target="#url_F">http://wap.kyread.com/user/sign/cid/{$channelid}.html</span>
+                                        <i class="fa fa-copy" id="copy_F" data-clipboard-target="#url_F" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+    function copyUrl(copyBtn,copyUrl){
+        var clipboard = new Clipboard(copyBtn);
+        clipboard.on('success', function (e) {
+            layer.tips('复制连接成功',copyUrl, {
+                tips: [1, '#3DA742'],
+                time: 4000
+            });
+        });
+    }
+    copyUrl('#copy_A','#url_A');
+    copyUrl('#copy_B','#url_B');
+    copyUrl('#copy_C','#url_C');
+    copyUrl('#copy_D','#url_D');
+    copyUrl('#copy_E','#url_E');
+    copyUrl('#copy_F','#url_F');
+
+    $(function(){
+        $('.table').setTableColor('#F9F9F9','#F9F9F9');
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<empty name="userinfo">
+    <p class="goods_title">抱歉暂时没有相关结果！</p>
+<else />
+<include file="Public/min-header" />
+<div class="wrapper">
+    <section class="content">
+
+        <div class="row">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs" style="border-bottom: none">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">用户信息</a>
+                    </li>
+                    <li><button type="submit" onclick="buyLogList('{:U('User/getUserBuySearch',array('id'=>$userinfo['uid']))}','{$userinfo['name']}消费记录',900,800)" id="button-filter search-order" class="btn btn-primary">
+                                消费记录
+                                </button></li>
+                    <!-- <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">消费记录</a>
+                    </li> -->
+                    <!-- <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false">订单记录</a>
+                    </li> -->
+                    <li><button type="submit" onclick="payLogList('{:U('User/getUserPaySearch',array('id'=>$userinfo['uid']))}','{$userinfo['name']}充值记录',900,800)" id="button-filter search-order" class="btn btn-primary">
+                                充值记录
+                                </button></li>
+                </ul>
+                <div class="tab-content" style="margin:20px 0;background: #ffffff">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="text-align: right;">
+                                <div style="text-align: center;">
+                                    <img src="{$userinfo.faceImg}" style="width:60px;height:60px;" />
+                                </div>
+                                <div style="text-align: center;margin-top:10px;">
+                                    <p><b>昵称:</b> {$userinfo.name} (<b>ID:</b> {$userinfo.uid})</p>
+                                </div>
+                                <div style="text-align: center;margin-top:10px;">
+                                    <p>
+                                        <if condition="$userinfo.isfollow eq 1">
+                                            <img src="__PUBLIC__/images/follow.png"/>
+                                        <else/>
+                                            <img src="__PUBLIC__/images/unfollow.jpg"/>  
+                                        </if>    
+                                            <span>书币:</span>{$userinfo.egold}
+                                        
+                                    </p>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="text-align: left;">
+                                <div style="text-align: left;">
+                                <ul style="list-style:none;">
+                                    <li>
+                                        <b>渠道账户名:</b> {$channelInfo.fchannel}
+                                    </li>
+                                    <p><br/></p>
+                                    
+                                </ul>
+
+                                </div>
+                                <div style="text-align: left;">
+                                <ul style="list-style:none;">
+                                    <li>
+                                        <b>代理账户名:</b> {$channelInfo.uname}
+                                    </li>
+                                    <p><br/></p>
+                                    
+                                </ul>
+
+                                </div>
+                                <div style="text-align: left;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            <b>用户注册时间:</b> {$userinfo.regdate|date="y-m-d H:i:s",###}
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                                <div style="text-align: left;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            <b>总消费金币:</b>
+                                            <empty name="sumMoney.sumMoney">
+                                            0
+                                            <else/>
+                                            {$sumMoney['sumMoney']}
+                                            </empty>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                                 <div style="text-align: left;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            <b>总充值金额:</b>
+                                            <empty name="sumPay.sumPay">
+                                            0
+                                            <else/>
+                                            {$sumPay['sumPay']}
+                                            </empty>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>                    
+                             
+</empty>
+<script type="text/javascript">
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+
+    /*
+    * 消费记录
+    * */
+    function buyLogList(url,title,w,h){
+        var heading=$('#search-form2').offset();
+        layer.open({
+            type: 2,
+            title: title,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade:0.4,
+            offset: [ //为了演示，随机坐标
+            heading.top/2],
+            content: url
+        });
+        
+    }
+     /*
+    * 充值记录
+    * */
+    function payLogList(url,title,w,h){
+        var heading=$('#search-form2').offset();
+        layer.open({
+            type: 2,
+            title: title,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade:0.4,
+            offset: [ //为了演示，随机坐标
+            heading.top/2],
+            content: url
+        });
+        
+    }
+    /*function ajax_get_table(form,page)
+    {
+        uid = $("input[name=userid]").val();
+
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "/index.php?m=Admin&c=User&a=getUserPaySearch&id="+uid+"&p="+cur_page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return").html('');
+                    $.each(data[0],function(i,n){
+                        //alert(n.obookname);
+                        
+                    });
+                    $("#ajax_return").append(n.obookname);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }*/
+
+       // 点击分页触发的事件
+    $(".pagination  a").click(function()
+    {
+        cur_page = $(this).data('p');
+        $("input[name=page]").val(cur_page);
+        ajax_get_table('form-order',cur_page);
+    });
+</script>

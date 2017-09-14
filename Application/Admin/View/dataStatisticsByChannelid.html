@@ -1,0 +1,385 @@
+<include file="Public/min-header"/>
+
+  <section class="content">
+
+    <div class="row">
+      <div class="tabs-container">
+        <ul class="nav nav-tabs" style="border-bottom: none">
+          <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">{$channelInfo['channelname']}订单统计</a>
+          </li>
+          <if condition="$Think.cookie.cpid elt 0">
+          
+          <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">{$channelInfo['channelname']}用户统计</a>
+          </li>
+          </if>
+        </ul>
+        <div class="tab-content" style="margin-bottom: 20px;background: #ffffff">
+          <div id="tab-1" class="tab-pane active">
+            <div class="panel-body">
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:136px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-orange" style="width:136px;height:136px;line-height:136px;text-aligh:center;">
+                      <i class="fa fa-money"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:136px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <a href="{:U('Index/newPayLog')}">
+                      <span class="info-box-text">当日充值</span>
+                       <span class="info-box-number">{$dayPayInfo['daypaySum']}</span>
+                       <div style="width: 100%;margin-top:8px;">
+                           <div style="color:#aaa;font-size:12px;float: left;">
+                               <p style="color:#666;font-size:15px;line-height: 6px">普通充值</p>
+                               <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$dayPayInfo['dayCommonPaySum']}</p>
+                               <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ： {$dayPayInfo['dayCommonPayCount']}笔</p>
+                               <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ：
+                 <if condition="$dayPayInfo['dayCommonPayCount'] gt 0">
+                 {$dayPayInfo['dayCommonPayCount']/($dayPayInfo['dayCommonPayCount']+$dayPayInfo['dayCommonUnPayCount'])*100|round=###,0}%
+                 <else/>
+                 0%
+                 </if>                 
+                 </p>
+                           </div>
+                           <div style="color:#aaa;font-size:12px;float: left;margin-left: 20px">
+                               <p style="color:#666;font-size:15px;line-height: 6px">年费充值</p>
+                               <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$dayPayInfo['dayYearPaySum']}</p>
+                               <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ： {$dayPayInfo['dayYearpayCount']}笔</p>
+                               <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ： {$dayPayInfo['dayYearpayCount']/($dayPayInfo['dayYearpayCount']+$dayPayInfo['dayYearUnPayCount'])*100|round=###,0}%</p>
+                           </div>
+                       </div>
+                      </a>
+                   </div>
+               </div>
+           </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:136px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-green" style="width:136px;height:136px;line-height:124px;text-aligh:center;">
+                      <i class="fa fa-money"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:136px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">昨日充值</span>
+                        <span class="info-box-number">{$payInfo['yeaterdayPaySum']}</span>
+                        <!--<p style="color:#aaa;font-size:12px;">笔数 {$yesterdaypayCount}</p>-->
+                        <div style="width: 100%;margin-top:4px;">
+                            <div style="color:#aaa;font-size:12px;float: left;">
+                                <p style="color:#666;font-size:15px;line-height: 6px">普通充值</p>
+                                <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$payInfo['yeaterdayCommonPaySum']}</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ： {$payInfo['yeaterdayCommonPayCount']}笔</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ：
+                                <if condition="$payInfo['yeaterdayCommonPayCount'] gt 0">
+                                {$payInfo['yeaterdayCommonPayCount']/($payInfo['yeaterdayCommonPayCount']+$payInfo['yeaterdayCommonUnPayCount'])*100|round=###,0}%
+                                <else/>
+                                0%
+                                </if>               
+                                </p>
+                            </div>
+                            <div style="color:#aaa;font-size:12px;float: left;margin-left: 20px">
+                                <p style="color:#666;font-size:15px;line-height: 6px">年费充值</p>
+                                <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$payInfo['yesterdayYearPaySum']}</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ： {$payInfo['yesterdayYearPayCount']}笔</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ： {$payInfo['yesterdayYearPayCount']/($payInfo['yesterdayYearPayCount']+$payInfo['yesterdayYearUnPayCount'])*100|round=###,0}%</p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:136px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-teal" style="width:136px;height:136px;line-height:136px;text-aligh:center;">
+                      <i class="fa fa-money"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:136px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">本月充值(不含当日)</span>
+                        <span class="info-box-number">{$payInfo['monthPaySum']}</span>
+                        <!--<p style="color:#aaa;font-size:12px;">笔&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数 {$monthpayCount}</p>-->
+                        <span style="color:#aaa;font-size:12px;float: right;margin-top: -40px">充值人数 {$payInfo['monthPayPeopleNum']}</span>
+                        <div style="width: 100%;margin-top:4px;">
+                            <div style="color:#aaa;font-size:12px; float:left;">
+                                <p style="color:#666;font-size:15px;line-height: 6px">普通充值</p>
+                                <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$payInfo['monthCommonPaySum']}</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ： {$payInfo['monthCommonPayCount']}笔</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ：
+                                <if condition="$payInfo['monthCommonPayCount'] gt 0">
+                                {$payInfo['monthCommonPayCount']/($payInfo['monthCommonPayCount']+$payInfo['monthCommonUnPayCount'])*100|round=###,0}%
+                                <else/>
+                                0%
+                                </if>               
+                                </p>
+                            </div>
+                            <div style="color:#aaa;font-size:12px;float: left;margin-left: 20px">
+                                <p style="color:#666;font-size:15px;line-height: 6px">年费充值</p>
+                                <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$payInfo['monthYearPaySum']}</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ： {$payInfo['monthYearPayCount']}笔</p>
+                                <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ： {$payInfo['monthYearPayCount']/($payInfo['monthYearPayCount']+$payInfo['monthYearUnPayCount'])*100|round=###,0}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:136px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-blue" style="width:136px;height:136px;line-height:136px;text-aligh:center;">
+                      <i class="fa fa-money"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:136px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">累计充值(不含当日)</span>
+                            <span class="info-box-number">{$payInfo['sumPay']}</span>
+                            <!--<p style="color:#aaa;font-size:12px;">笔&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数 {$sumpayCount}</p>-->
+                            <span style="color:#aaa;font-size:12px;float: right;margin-top: -40px;">充值人数 {$payInfo['sumPayPeopleNum']}</span>
+                            <div style="width: 100%;margin-top: 8px">
+                                <div style="color:#aaa;font-size:12px;float: left;">
+                                    <p style="color:#666;font-size:15px;line-height: 6px">普通充值</p>
+                                    <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$payInfo['commonPaySum']}</p>
+                                    <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ：{$payInfo['commonPayCount']}笔</p>
+                                    <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ：
+                                    <if condition="$payInfo['commonPayCount']">
+                                    {$payInfo['commonPayCount']/($payInfo['commonPayCount']+$payInfo['commonUnPayCount'])*100|round=###,0}%
+                                    <else/>
+                                    0%
+                                    </if>                 
+                                    </p>
+                                </div>
+                                <div style="color:#aaa;font-size:12px;float: left;margin-left: 20px">
+                                    <p style="color:#666;font-size:15px;line-height: 6px">年费充值</p>
+                                    <p style="color:#8a6d3b;font-size:15px;line-height: 6px">{$payInfo['yearPaySum']}</p>
+                                    <p style="color:#aaa;font-size:12px;line-height: 6px">已充值 ：{$payInfo['yearPayCount']}笔</p>
+                                    <p style="color:#aaa;font-size:12px;line-height: 6px">完成率 ：{$payInfo['yearPayCount']/($payInfo['yearPayCount']+$payInfo['yearUnPayCount'])*100|round=###,0}%</p>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+        
+        <if condition="$Think.cookie.cpid elt 0">  
+          <div id="tab-2" class="tab-pane">
+            <div class="panel-body">
+          
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:128px">
+                <if condition="($Think.cookie.cpid elt 0)">
+                  <if condition="($is_mobile eq 0)">
+                    <span class="info-box-icon bg-green" style="width:128px;height:128px;line-height:128px;text-aligh:center;">
+                      <i class="fa fa-user-plus"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:128px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">今日新增</span>
+                    <span class="info-box-number">{$dayUserInfo['dayUser']}</span>
+                    <div style="margin-top: 7px;">
+                      <p>
+                        <b style="color: #8a6d3b">{$dayUserInfo['dayUserSex1']}</b>男性，
+                        <b style="color: #8a6d3b">{$dayUserInfo['dayUserSex2']}</b>女性，
+                        <b style="color: #8a6d3b">{$dayUserInfo['dayUserSex0']}</b>未知
+                      </p>
+                      <div style="line-height: 10px;">
+                        <p>已关注：<b style="color: #8a6d3b">{$dayUserInfo['dayUserFocus']} ({$dayUserInfo['dayUserFocus']/$dayUserInfo['dayUser']*100|round=###,0}%)</b></p>
+                        <p>已付费：<b style="color: #8a6d3b">{$dayUserInfo['dayUserPay']} ({$dayUserInfo['dayUserPay']/$dayUserInfo['dayUserFocus']*100|round=###,0}%)</b></p>
+                      </div>
+                    </div>
+<!--
+                      <p style="color:#aaa;font-size:12px;">关注率 {$curDayFocus/$curDayReader*100|round=###,0}%</p>
+-->
+                    <p style="color:#aaa;font-size:12px; float:right;margin-top: -20px;">今日签到:{$daysign}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:128px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-blue" style="width:128px;height:128px;line-height:128px;text-aligh:center;">
+                      <i class="fa fa-user"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:128px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">昨日新增</span>
+                    <span class="info-box-number">{$userInfo['yesterdayUser']}</span>
+                    <div style="margin-top: 7px;">
+                      <p>
+                        <b style="color: #8a6d3b">{$userInfo['yesterdayUserSex1']}</b>男性，
+                        <b style="color: #8a6d3b">{$userInfo['yesterdayUserSex2']}</b>女性，
+                        <b style="color: #8a6d3b">{$userInfo['yesterdayUserSex0']}</b>未知</p>
+                      <div style="line-height: 10px;">
+                        <p>已关注：<b style="color: #8a6d3b">{$userInfo['yesterdayUserFocus']} ({$userInfo['yesterdayUserFocus']/$userInfo['yesterdayUser']*100|round=###,0}%)</b></p>
+                        <p>已付费：<b style="color: #8a6d3b">{$userInfo['yesterdayUserPay']} ({$userInfo['yesterdayUserPay']/$userInfo['yesterdayUserFocus']*100|round=###,0}%)</b></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:128px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-orange" style="width:128px;height:128px;line-height:128px;text-aligh:center;">
+                      <i class="fa fa-user"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:128px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">本月新增(不含当日)</span>
+                    <span class="info-box-number">{$userInfo['monthUser']}</span>
+                    <div style="margin-top: 7px;">
+                      <p>
+                        <b style="color: #8a6d3b">{$userInfo['monthUserSex1']}</b>男性，
+                        <b style="color: #8a6d3b">{$userInfo['monthUserSex2']}</b>女性，
+                        <b style="color: #8a6d3b">{$userInfo['monthUserSex0']}</b>未知</p>
+                      <div style="line-height: 10px;">
+                        <p>已关注：<b style="color: #8a6d3b">{$userInfo['monthUserFocus']} ({$userInfo['monthUserFocus']/$userInfo['monthUser']*100|round=###,0}%)</b></p>
+                        <p>已付费：<b style="color: #8a6d3b">{$userInfo['monthUserPay']} ({$userInfo['monthUserPay']/$userInfo['monthUserFocus']*100|round=###,0}%)</b></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box" style="height:128px">
+                  <if condition="$is_mobile eq 0">
+                    <span class="info-box-icon bg-red" style="width:128px;height:128px;line-height:128px;text-aligh:center;">
+                      <i class="fa fa-users"></i>
+                    </span>
+                    <div class="info-box-content" style="margin-left:128px;">
+                    <else/>
+                    <div class="info-box-content" style="margin-left:0px;">
+                  </if>
+                    <span class="info-box-text">累计用户(不含当日)</span>
+                    <span class="info-box-number">{$userInfo['sumUser']}</span>
+                    <div style="margin-top: 7px;">
+                      <p>
+                        <b style="color: #8a6d3b">{$userInfo['sumUserSex1']}</b>男性，
+                        <b style="color: #8a6d3b">{$userInfo['sumUserSex2']}</b>女性，
+                        <b style="color: #8a6d3b">{$userInfo['sumUserSex0']}</b>未知</p>
+                      <div style="line-height: 10px;">
+                        <p>已关注：<b style="color: #8a6d3b">{$userInfo['sumUserFocus']} ({$userInfo['sumUserFocus']/$userInfo['sumUser']*100|round=###,0}%)</b></p>
+                        <p>已付费：<b style="color: #8a6d3b">{$userInfo['sumUserPay']} ({$userInfo['sumUserPay']/$userInfo['sumUserFocus']*100|round=###,0}%)</b></p>
+                      </div>
+                    </if>  
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            
+            </div>
+          </div>
+          </if>
+        </div>
+      </div>
+    </div>
+</section>
+
+    <div class="container-fluid">
+            
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        <span> 近30天充值记录</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <empty name="data">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center">
+                                            日期
+                                        </td>
+                                        <td class="text-center">
+                                            总笔数
+                                        </td>
+                                        <td class="text-center">
+                                            充值金额
+                                        </td>
+                                        <td class="text-center">
+                                            账单金额
+                                        </td>
+                                        <td class="text-center">
+                                            分成比例
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="data" id="val">
+                                        <tr>
+                                            <td class="text-center">
+                                                {:date('Y-m-d',$val['buytime'])}
+                                            </td>
+
+                                            <td class="text-center">
+                                                <a href="__CONTROLLER__/paymentInfo/time/{:date('Y-m-d',$val['buytime'])}/channelid/{$val['channelid']}.html">
+                                                    {$val.count}
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$val.summoney}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$val['summoney'] * $channelInfo['proportion']}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$channelInfo['proportion']}
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    <!--affiche end-->
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    
+    <!-- /.content -->
+
+
+</body>
+</html>

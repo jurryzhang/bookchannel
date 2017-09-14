@@ -1,0 +1,196 @@
+
+
+<if condition = "$ischannel neq 1">
+    <include file="Public/min-header"/>
+</if>
+<div class="wrapper">
+    <if condition = "$ischannel neq 1">
+        <include file="Public/breadcrumb"/>
+    </if>
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <if condition = "$ischannel neq 1">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <else/>
+                <div class="pull-right">
+                    <a href="{:U('channel/index')}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            </if>
+            <div class="panel panel-default">
+                <if condition = "$ischannel neq 1">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>
+                            {$channel.channelname}渠道信息
+                        </h3>
+                    </div>
+                </if>
+                <div class="panel-body">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            渠道充值信息
+                        </h3>
+
+                        <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="hidden" name="key_word" value="{$channel.channelname}" id="input-order-id" class="form-control">
+                                </div>
+                            </div>
+                            <input type="hidden" name="orderby1" value="channelid" />
+                            <input type="hidden" name="orderby2" value="desc" />
+                        </form>
+                    </div>
+
+                    <div id="ajax_return_paylog"></div>
+                    <if condition="$ischannel neq 1">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                               渠道销售信息
+                            </h3>
+                        </div>
+
+                        <div id="ajax_return_buyinfo"></div>
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                渠道用户访问信息
+                            </h3>
+                        </div>
+
+                        <div id="ajax_return_useraccessslog"></div>
+                    </if>
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            渠道用户信息
+                        </h3>
+                    </div>
+
+                    <div id="ajax_return_userinfo"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    $(document).ready(function()
+    {
+        ajax_get_paylog('search-form2',1);
+
+        ajax_get_buyinfo('search-form2',1);
+
+        ajax_get_useraccessslog('search-form2',1);
+
+        ajax_get_userinfo('search-form2',1);
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_paylog(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=User&a=ajaxChannelPayLogList&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_paylog").html('');
+
+                    $("#ajax_return_paylog").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_buyinfo(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=BookSale&a=ajaxBookSaleListByChannelID&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_buyinfo").html('');
+
+                    $("#ajax_return_buyinfo").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_useraccessslog(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=User&a=ajaxChannelUserAccessLog&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_useraccessslog").html('');
+
+                    $("#ajax_return_useraccessslog").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_userinfo(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=User&a=ajaxChannelUserList&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_userinfo").html('');
+
+                    $("#ajax_return_userinfo").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+</script>
+</body>
+</html>

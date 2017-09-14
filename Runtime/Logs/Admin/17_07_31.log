@@ -1,0 +1,147 @@
+[ 2017-07-31T08:29:55+08:00 ] 127.0.0.1 /
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+NOTIC: [2] include(C:\\mobilebook\\adswitch.php): failed to open stream: No such file or directory D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+NOTIC: [2] include(): Failed opening 'C:\\mobilebook\\adswitch.php' for inclusion (include_path='D:\xampp\php\PEAR') D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `jieqi_config`
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `jieqi_config` 
+NOTIC: [2] Invalid argument supplied for foreach() D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 81 行.
+NOTIC: [8] Undefined index: index D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 78 行.
+NOTIC: [8] Undefined index: index D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 79 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
+
+[ 2017-07-31T08:30:08+08:00 ] 127.0.0.1 /index.php?s=/Admin/login.html
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2] include(C:\\mobilebook\\adswitch.php): failed to open stream: No such file or directory D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+NOTIC: [2] include(): Failed opening 'C:\\mobilebook\\adswitch.php' for inclusion (include_path='D:\xampp\php\PEAR') D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `jieqi_config`
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `jieqi_config` 
+NOTIC: [2] Invalid argument supplied for foreach() D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 81 行.
+NOTIC: [8] Undefined index: admin D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 78 行.
+NOTIC: [8] Undefined index: admin D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 79 行.
+
+[ 2017-07-31T08:30:11+08:00 ] 127.0.0.1 /index.php?s=/Channel/index.html
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2] include(C:\\mobilebook\\adswitch.php): failed to open stream: No such file or directory D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+NOTIC: [2] include(): Failed opening 'C:\\mobilebook\\adswitch.php' for inclusion (include_path='D:\xampp\php\PEAR') D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `jieqi_config`
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `jieqi_config` 
+NOTIC: [2] Invalid argument supplied for foreach() D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 81 行.
+NOTIC: [8] Undefined index: index D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 79 行.
+NOTIC: [8] Use of undefined constant uid - assumed 'uid' D:\xampp\htdocs\bookchannel\Application\Admin\Controller\ChannelController.class.php 第 40 行.
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AND `payflag` = 1 GROUP BY buyid' at line 1
+ [ SQL语句 ] : SELECT `buyid` FROM `jieqi_distribution_pay_paylog` WHERE `buyid` IN () AND `payflag` = 1 GROUP BY buyid 
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AND `payflag` = 1 GROUP BY buyid' at line 1
+ [ SQL语句 ] : SELECT `buyid` FROM `jieqi_distribution_pay_paylog` WHERE `buyid` IN () AND `payflag` = 1 GROUP BY buyid 
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AND `payflag` = 1 GROUP BY buyid' at line 1
+ [ SQL语句 ] : SELECT `buyid` FROM `jieqi_distribution_pay_paylog` WHERE `buyid` IN () AND `payflag` = 1 GROUP BY buyid 
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AND `payflag` = 1 GROUP BY buyid' at line 1
+ [ SQL语句 ] : SELECT `buyid` FROM `jieqi_distribution_pay_paylog` WHERE `buyid` IN () AND `payflag` = 1 GROUP BY buyid 
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AND `payflag` = 1 GROUP BY buyid' at line 1
+ [ SQL语句 ] : SELECT `buyid` FROM `jieqi_distribution_pay_paylog` WHERE `buyid` IN () AND `payflag` = 1 GROUP BY buyid 
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: upgradeMsg D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 247 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 637 行.
+NOTIC: [8] Undefined variable: yesterdaypayCount D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 655 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 671 行.
+NOTIC: [8] Undefined variable: monthpayCount D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 688 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 705 行.
+NOTIC: [8] Undefined variable: sumpayCount D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 722 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 739 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 765 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 766 行.
+NOTIC: [8] Undefined variable: curDayReader D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 770 行.
+NOTIC: [8] Undefined variable: curDayFocus D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 770 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 770 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 794 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 795 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 818 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 819 行.
+NOTIC: [8] Undefined index: remainmoney D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 833 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 854 行.
+NOTIC: [2] Division by zero D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\02cafd185cb33fcae223b1104c31c64e.php 第 855 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.065004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.065004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2017-07-31T08:30:11+08:00 ] 127.0.0.1 /index.php?m=Admin&c=Channel&a=ajaxChannelList&p=1
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2] include(C:\\mobilebook\\adswitch.php): failed to open stream: No such file or directory D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+NOTIC: [2] include(): Failed opening 'C:\\mobilebook\\adswitch.php' for inclusion (include_path='D:\xampp\php\PEAR') D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `jieqi_config`
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `jieqi_config` 
+NOTIC: [2] Invalid argument supplied for foreach() D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 81 行.
+NOTIC: [8] Undefined index: ajaxChannelList D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 79 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: daysumpay D:\xampp\htdocs\bookchannel\Runtime\Cache\Admin\06dca19fe6b255cf3c0dbb86d3adc5f5.php 第 88 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-07-31T17:39:35+08:00 ] 127.0.0.1 /index.php?m=Admin&c=Channel&a=ajaxChannelList&p=1
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.008501s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.010501s ]
+NOTIC: [2] include(C:\\mobilebook\\adswitch.php): failed to open stream: No such file or directory D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+NOTIC: [2] include(): Failed opening 'C:\\mobilebook\\adswitch.php' for inclusion (include_path='D:\xampp\php\PEAR') D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 67 行.
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `jieqi_config`
+ERR: 1146:Table 'acool.jieqi_config' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `jieqi_config` 
+NOTIC: [2] Invalid argument supplied for foreach() D:\xampp\htdocs\bookchannel\Application\Admin\Controller\BaseController.class.php 第 81 行.
+NOTIC: [8] Undefined index: ajaxChannelList D:\xampp\htdocs\bookchannel\Application\Admin\Common\function.php 第 79 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000500s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.067008s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.067008s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000500s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000500s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000500s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

@@ -1,0 +1,147 @@
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        文案标题列表
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form action="__CONTROLLER__/titleList/" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+
+                                <div class="form-group">
+                                    <select id="channel" name="channel" class="form-control" style="width: 350px; display: inline-block;">
+                                        <option value="" <if condition="($channel eq '全部')">selected="selected"</if> >全部</option>
+                                        <option value="通用" <if condition="($channel eq '通用')">selected="selected"</if> >通用</option>
+                                        <option value="男频" <if condition="($channel eq '男频')">selected="selected"</if> >男频</option>
+                                        <option value="女频" <if condition="($channel eq '女频')">selected="selected"</if> >女频</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="orderby1" value="articleid" />
+                                <input type="hidden" name="orderby2" value="desc" />
+
+                                <button type="submit" onclick="this.form.submit()" id="button-filter search-order" class="btn btn-primary">
+                                    <i class="fa fa-search"></i> 筛选
+                                </button>
+
+                                <button type="button" onclick="location.href='__CONTROLLER__/titleAdd.html'" class="btn btn-primary pull-right">
+                                    <i class="fa fa-plus"></i>添加标题
+                                </button>
+
+                        </form>
+                    </div>
+                    <empty name="data">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center">
+                                            ID
+                                        </td>
+
+                                        <td class="text-center">
+                                            标题
+                                        </td>
+                                        <td class="text-center">
+                                            频道
+                                        </td>
+                                            <td class="text-center">
+                                                操作
+                                            </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="data" id="list">
+                                        <tr>
+                                            <td class="text-center">
+                                                {$list.id}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.title}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.channel}
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                    <a href="javascript:void (0)" onclick="del({$list.id},this);" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除渠道">
+                                                        <span>删除标题</span>
+                                                    </a>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+
+    function del(id,obj)
+    {
+        if(!confirm('确定要删除吗?'))
+        {
+            return false;
+        }
+
+        $.ajax(
+        {
+            url     : "__CONTROLLER__/titleDel/id/"+id,
+            success : function(v)
+            {
+                if(v.status==1){
+                    layer.msg(v.info, {icon: 1,time: 1000});
+                    $(obj).parent().parent().remove();
+                }else {
+                    layer.msg(v.info, {icon: 2,time: 1000});
+                }
+            }
+        });
+
+        return false;
+    }
+
+
+
+
+
+
+</script>
+</body>
+</html>

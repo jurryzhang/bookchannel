@@ -1,0 +1,124 @@
+<empty name="articlelist">
+    <p class="goods_title">抱歉暂时没有相关结果！</p>
+<else />
+    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td class="text-center">
+                        <a href="javascript:sort('articleid');">BooKID</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('articlename');">小说名称</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('author');">小说作者</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('size');">小说字数</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('sumegold');">小说收益</a>({$egold_name})
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('allvisit');">用户总点击数</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('dayvisit');">用户日点击数</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('weekvisit');">用户周点击数</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="javascript:sort('monthvisit');">用户月点击数</a>
+                    </td>
+                    <td class="text-center">
+                        操作
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="articlelist" id="book">
+                    <tr>
+                        <td class="text-center">
+                            {$book.articleid}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.articlename}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.author}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.wordsum}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.sumegold}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.allvisit}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.dayvisit}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.weekvisit}
+                        </td>
+
+                        <td class="text-center">
+                            {$book.monthvisit}
+                        </td>
+
+                        <td class="text-center">
+                            <a href="{:U('Admin/BookSale/chapterList',array('id' => $book['articleid']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情" target="rightContent">
+                                <span>详细销售</span>
+                            </a>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-sm-3 text-left"></div>
+        <div class="col-sm-9 text-right">{$page}</div>
+    </div>
+</empty>
+<script>
+
+    // 点击分页触发的事件
+    $(".pagination  a").click(function()
+    {
+        cur_page = $(this).data('p');
+
+        ajax_get_table('search-form2',cur_page);
+    });
+
+
+    // 点击排序
+    function sort(field)
+    {
+        $("input[name='orderby1']").val(field);
+        var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';
+        $("input[name='orderby2']").val(v);
+
+        ajax_get_table('search-form2',cur_page);
+    }
+</script>

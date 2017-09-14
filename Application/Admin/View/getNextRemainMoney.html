@@ -1,0 +1,298 @@
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+    
+
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        
+		
+                
+		
+		<div class="container-fluid">
+            
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+        
+            <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>
+                            <span style="color: #9e9e9e"></span>代理结算单
+                        </h3>
+                    </div>
+                
+                <div class="panel-body">
+                    <empty name="data">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center">
+                                            日期
+                                        </td>
+                                        <td class="text-center">
+                                            代理账户名(登录用)
+                                        </td>
+                                        <td class="text-center">
+                                            总笔数
+                                        </td>
+                                        <td class="text-center">
+                                            充值金额
+                                        </td>
+                                        <td class="text-center">
+                                            账单金额
+                                        </td>
+                                        <td class="text-center">
+                                            分成比例
+                                        </td>
+                                        <td class="text-center">
+                                            状态
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="data" id="val">
+                                        <tr>
+                                            <td class="text-center">
+                                                {:date('Y-m-d',$val['buytime'])}
+                                            </td>
+                                            <td class="text-center">
+                                                {$val['channelinfo']['uname']}
+                                            </td>
+
+                                            <td class="text-center">
+                                                <a href="__CONTROLLER__/paymentInfo/time/{:date('Y-m-d',$val['buytime'])}/channelid/{$val['channelinfo']['channelid']}.html">
+                                                    {$val.count}
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$val.summoney}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$val['summoney'] * $val['channelinfo']['proportion']}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$val['channelinfo']['proportion']}
+                                            </td>
+
+                                            <td class="text-center">
+                                                <if condition="$issum eq 1">
+                                                    <if condition="$val['status'] eq 1">
+                                                        <a href="javascript:void(0);"
+                                                           data-time="{:date('Y-m-d',$val['buytime'])}" data-id="{$val['channelinfo']['channelid']}" data-askmoney="{$val.summoney}"
+                                                           data-pro="{$val['channelinfo']['proportion']}" data-paymoney="{$val['summoney'] * $val['channelinfo']['proportion']}"
+                                                           class="badge bg-yellow askpayment" style="padding: 5px 10px">
+                                                            结算中
+                                                        </a>
+                                                        <elseif condition="$val['status'] eq 2"/>
+                                                        <a href="javascript:void(0);"
+                                                           data-time="{:date('Y-m-d',$val['buytime'])}" data-id="{$val['channelinfo']['channelid']}" data-askmoney="{$val.summoney}"
+                                                           data-pro="{$val['channelinfo']['proportion']}" data-paymoney="{$val['summoney'] * $val['channelinfo']['proportion']}"
+                                                           class="badge bg-green askpayment" style="padding: 5px 10px">
+                                                            已结算
+                                                        </a>
+                                                        <else/>
+                                                        <a href="javascript:void(0);"
+                                                           data-time="{:date('Y-m-d',$val['buytime'])}" data-id="{$channelid}" data-askmoney="{$val.summoney}"
+                                                           data-pro="{$val['channelinfo']['proportion']}" data-paymoney="{$val['summoney'] * $val['channelinfo']['proportion']}"
+                                                           class="badge bg-red askpayment" style="padding: 5px 10px">
+                                                            未结算
+                                                        </a>
+                                                    </if>
+                                                <elseif condition="$Think.cookie.channelid eq $channelid"/>													
+													<a href="__CONTROLLER__/paymentInfo/time/{:date('Y-m-d',$val['buytime'])}/channelid/{$val['channelinfo']['channelid']}.html"
+														   class="badge bg-green" style="padding: 5px 10px">
+														   充值明细
+													</a>
+												<else/>
+													<if condition="$val['status'] eq 1">
+														<a href="javascript:void(0);"
+														   data-time="{:date('Y-m-d',$val['buytime'])}" data-id="{$val['channelinfo']['channelid']}" data-askmoney="{$val.summoney}"
+														   data-pro="{$val['channelinfo']['proportion']}" data-paymoney="{$val['summoney'] * $val['channelinfo']['proportion']}"
+														   class="badge bg-yellow dealAskpay" style="padding: 5px 10px">
+															用户申请结算
+														</a>
+														<elseif condition="$val['status'] eq 2"/>
+														<a href="__CONTROLLER__/paymentInfo/time/{:date('Y-m-d',$val['buytime'])}/channelid/{$val['channelinfo']['channelid']}.html"
+														   class="badge bg-green" style="padding: 5px 10px">
+															结算成功
+														</a>
+														<else/>
+														<a href="javascript:void(0);"
+														   data-time="{:date('Y-m-d',$val['buytime'])}" data-id="{$val['channelinfo']['channelid']}" data-askmoney="{$val.summoney}"
+														   data-pro="{$val['channelinfo']['proportion']}" data-paymoney="{$val['summoney'] * $val['channelinfo']['proportion']}"
+														   class="badge bg-red dealAskpay" style="padding: 5px 10px">
+															未结算
+														</a>
+													</if>													                                                  
+                                                </if>
+
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+               
+          
+        <!-- /.row -->
+       
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+   
+   
+    //结算申请
+  /*  $(function(){
+        $('.askpayment').click(function(){
+            var _this=$(this);
+            var asktime=_this.attr('data-time');
+            var channleid=_this.attr('data-id');
+            var askmoney=_this.attr('data-askmoney');
+            var paymoney=_this.attr('data-paymoney');
+            var proportion=_this.attr('data-pro');
+            if(_this.hasClass('bg-yellow')){
+                layer.msg('已提交申请,请勿重复操作',{icon:5});
+                history.go(0);
+                return false;
+            }
+            if(_this.hasClass('bg-green')){
+                layer.msg('已结算成功',{icon:7});
+                history.go(0);
+                return false;
+            }
+            $.ajax(
+                {
+                    type    : "POST",
+                    url     : "/index.php?m=Admin&c=Askpayment&a=index",
+                    data    : {asktime:asktime,channelid:channleid,askmoney:askmoney,paymoney:paymoney,proportion:proportion},
+                    success : function(data)
+                    {
+                        if(data.result==1){
+                            layer.msg(data.msg,{icon:6});
+                            _this.removeClass('bg-red').addClass('bg-yellow').html('结算中');
+                            history.go(0);
+                        }else{
+                            layer.msg(data.msg,{icon:5});
+                            history.go(0);
+                        }
+
+                    },
+                    error   : function(data)
+                    {
+                        layer.msg(data.msg,{icon:5});
+                        history.go(0);
+                    }
+                });
+        });*/
+        //处理结算申请
+        /*$('.dealAskpay').click(function(){
+            var _this=$(this);
+            var asktime=_this.attr('data-time');
+            var channleid=_this.attr('data-id');
+            var askmoney=_this.attr('data-askmoney');
+            var paymoney=_this.attr('data-paymoney');
+            var proportion=_this.attr('data-pro');
+            if(_this.hasClass('bg-green')){
+                layer.msg('已结算',{icon:7});
+                return false;
+            }
+            $.ajax(
+                {
+                    type    : "POST",
+                    url     : "/index.php?m=Admin&c=Askpayment&a=dealAskpay",
+                    data    : {asktime:asktime,channelid:channleid,askmoney:askmoney,paymoney:paymoney,proportion:proportion},
+                    success : function(data)
+                    {
+                        if(data.result==1){
+                            layer.msg(data.msg,{icon:6});
+                            _this.removeClass('bg-red').addClass('bg-green').html('结算成功');
+                        }else{
+                            layer.msg(data.msg,{icon:5});
+                        }
+
+                    },
+                    error   : function(data)
+                    {
+                        layer.msg(data.msg,{icon:5});
+                    }
+                });
+        });*/
+		/*处理结算申请*/
+		/*$('.dealAskpay').click(function(){
+            var _this=$(this);
+            if(time<1){
+                dealAsk(_this);
+            }
+        });		
+    })
+	
+	var time=0;
+    function dealAsk(_this){
+        var asktime=_this.attr('data-time');
+        var channleid=_this.attr('data-id');
+        var askmoney=_this.attr('data-askmoney');
+        var paymoney=_this.attr('data-paymoney');
+        var proportion=_this.attr('data-pro');
+        if(_this.hasClass('bg-green')){
+            layer.msg('已结算',{icon:7});
+            history.go(0);
+            return false;
+        }
+        if(time<1) {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/index.php?m=Admin&c=Askpayment&a=dealAskpay",
+                    data: {
+                        asktime: asktime,
+                        channelid: channleid,
+                        askmoney: askmoney,
+                        paymoney: paymoney,
+                        proportion: proportion
+                    },
+                    success: function (data) {
+                        time++;
+                        if (data.result == 1) {
+                            layer.msg(data.msg, {icon: 6});
+                            _this.removeClass('bg-red').addClass('bg-green').html('结算成功');
+                            history.go(0);
+                        } else {
+                            layer.msg(data.msg, {icon: 5});
+                            history.go(0);
+                        }
+
+                    }
+                });
+            time++;
+        }
+    }*/
+
+</script>
+</body>
+</html>

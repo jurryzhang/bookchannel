@@ -1,0 +1,290 @@
+<if condition = "$Think.cookie.permissions eq 0">
+    <include file="Public/header" />
+</if>
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                    <i class="fa fa-reply">
+                    </i>
+                </a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        评论记录
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form action="" id="search-form2" class="navbar-form form-inline" method="post">
+                            <div class="form-group">
+                                <label class="control-label" for="input-order-id">关键词</label>
+                                <div class="input-group">
+                                    <input type="text" name="key_word" value="{$keywords}" placeholder="用户名/小说名" id="input-order-id" class="form-control">
+                                </div>
+                            </div>
+
+                            <button type="submit" id="button-filter search-order" class="btn btn-primary">
+                                <i class="fa fa-search"></i> 筛选
+                            </button>
+                        </form>
+                    </div>
+                    <empty name="commentList">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center">
+                                            用户名
+                                        </td>
+
+                                        <td class="text-center">
+                                            小说名
+                                        </td>
+
+                                        <td class="text-left" colspan="2">
+                                            评论内容
+                                        </td>
+
+                                        <td class="text-center">
+                                            评论时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            操作
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="commentList" id="list">
+                                        <tr>
+                                            <td class="text-center" style="padding: 1% 0px;">
+                                                {$list.name}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.articlename}
+                                            </td>
+
+                                            <td class="text-left" style="width: 40%;border-right: none">
+                                                {$list.content}
+                                            </td>
+                                            <td class="replyBtn" data-id="{$list['commentid']}" data-name="{$list['name']}" style="border-left: none;cursor: pointer;">
+                                                <!-- onclick="reply('/index.php/Doc/commentReply/id/{$list.commentid}','{$list.name}',390,330)"-->
+                                                <if condition="$list['reply'] eq ''">
+                                                    <i class="fa fa-comment-o"></i>
+                                                    <else/>
+                                                    <i class="fa fa-comment"></i>
+                                                </if>
+                                                <input type="hidden" value="{$list.reply}" data-name="{$list.name}" id="reply{$list['commentid']}"/>
+                                            </td>
+
+                                            <td class="text-center">
+                                                {:date('Y-m-d H:i:s',$list['addtime'])}
+                                            </td>
+
+                                            <td class="text-center">
+                                                <if condition="$list['ischeck'] eq 1">
+                                                    <span class="label label-success" style="cursor: pointer;">已审核</span>
+                                                    <else/>
+                                                    <span class="label label-warning" style="cursor: pointer;" data-id="{$list['commentid']}"}>未审核</span>
+                                                </if>
+                                                <span class="label label-default del-btn" style="cursor: pointer;" data-id="{$list['commentid']}">删除记录</span>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+            <div id="replyBox" style="cursor: move;width: 450px;height:330px;display: none;position: fixed;bottom: 40%;left: 30%;z-index:100;background: rgba(0,0,0,0.6);color: #FFFFff;padding: 10px;">
+                <div id="replyHeader" style="margin-bottom: 15px;"></div>
+                <textarea rows="10" cols="58%" id="content" style="background: rgba(0,0,0,0.6);"></textarea>
+                <div style="text-align: center">
+                    <button class="btn btn-primary" title="" id="submitBtn" data-toggle="tooltip" data-original-title="保存">
+                        保存
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" id="back" data-toggle="tooltip" title=""
+                       class="btn btn-default" data-original-title="返回"> 取消
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" id="clear" data-toggle="tooltip" title=""
+                       class="btn btn-default" data-original-title="清空"> 清空
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+    $('.label').click(function(){
+        _this=$(this);
+        if(_this.hasClass('label-success')){
+            layer.msg('已审核成功,请勿重复操作',{icon:5});
+            return false;
+        }else if(_this.hasClass('label-warning')){
+            var commentid=_this.attr('data-id');
+            $.ajax(
+                {
+                    type    : "POST",
+                    url     : "/index.php?m=Admin&c=Doc&a=checkComment",
+                    data    : {commentid:commentid},
+                    success : function(data)
+                    {
+                        if(data.status==1){
+                            layer.msg(data.message,{icon:6});
+                            _this.removeClass('label-warning').addClass('label-success').html('已审核');
+                        }else{
+                            layer.msg(data.message,{icon:5});
+                        }
+
+                    }
+                });
+        }
+    });
+    $('.del-btn').click(function(){
+        _this=$(this);
+        var commentid=_this.attr('data-id');
+        layer.confirm('确定要删除该选项吗？',{
+            btn:['确定','取消']},
+            function(){
+                $.ajax({
+                    type    : 'POST',
+                    url     : '/index.php?m=Admin&c=Doc&a=delComment',
+                    data    : {commentid:commentid},
+                    success : function(data){
+                        if(data.status==1){
+                            layer.msg(data.message,{icon:6});
+                            _this.parents('tr').hide();
+                        }else{
+                            layer.msg(data.message,{icon:5});
+                        }
+                    }
+                });
+            }
+        );
+    });
+    /*回复按钮*/
+    /*function reply(url,title,w,h){
+        var heading=$('.replyBtn').offset();
+        layer.open({
+            type: 2,
+            title: '回复 '+title,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade:0.4,
+            offset: [ //为了演示，随机坐标
+                heading.top/2],
+            content: url,
+            btn: ['保存', '取消'] //只是为了演示
+            ,yes: function(){
+
+            }
+        });
+    }*/
+	/*回复按钮*/
+    var commentid='';    
+    $('.replyBtn').click(function(even){
+        even.preventDefault();        
+        //弹出窗口居中
+        var alt_T=$(window).height()/2-$('#replyBox').height()/2;
+        var alt_L=$(window).width()/2-$('#replyBox').width()/2;
+        $('#replyBox').fadeIn();
+        $('#replyBox').css({top:alt_T,left:alt_L});
+
+        $('#replyBox textarea').html('');
+        $('#replyBox').css('display','block');
+        commentid=$(this).attr('data-id');
+        var content=$("#reply"+commentid).val();
+        $('#replyBox textarea').html(content);
+
+        var username=$("#reply"+commentid).attr('data-name');
+        $('#replyHeader').html('回复 '+username);
+        $('#submitBtn').click(function(){
+            content=$("#content").val();
+            $.ajax({
+                type    : 'POST',
+                url     : '/index.php?m=Admin&c=Doc&a=commentReply',
+                data    : {commentid:commentid,content:content},
+                success : function(data){
+                    if(data.status==1){
+                        $('#replyBox').css('display','none');
+                        layer.msg(data.message,{icon:6});
+                        location.reload();
+                    }else{
+                        layer.msg(data.message,{icon:5});
+                    }
+                }
+            });
+        });
+    });
+    /*回复框取消*/
+    $('#back').click(function(){
+        $('#replyBox').css('display','none');
+    });
+    /*清空回复框内容*/
+    $('#clear').click(function(){
+        $('#replyBox textarea').html('');
+    });
+    /*鼠标按下弹框窗口并移动，离开弹框停留*/
+    var isMove=false;
+    $('#replyHeader').mousedown(function(e_down){
+        e_down.preventDefault();
+        var abs_x=e_down.pageX-$('#replyBox').offset().left;
+        var abs_y=e_down.pageY-$('#replyBox').offset().top;
+        isMove=true;
+        /*获取鼠标移动后，窗口距当前视口的左、上距离*/
+        $(document).mousemove(function(e_move){
+            e_move.preventDefault();
+            if(isMove){
+                //鼠标拖拽坐标
+                var left_E=e_move.pageX-abs_x;
+                var top_E=e_move.pageY-abs_y-$(window).scrollTop();//移动后的鼠标纵坐标减去滚轴的高度是鼠标在一屏的坐标
+                //弹框窗最大left top
+                var maxLeft=$(window).width()-$('#replyBox').width();
+                var maxTop=$(window).height()-$('#replyBox').height();
+                if(left_E<0){
+                    left_E=0;
+                }
+                if(left_E>maxLeft){
+                    left_E=maxLeft;
+                }
+                if(top_E<0){
+                    top_E=0;
+                }
+                if(top_E>maxTop){
+                    top_E=maxTop;
+                }
+                $('#replyBox').css({top:top_E,left:left_E});
+            }
+        });
+    }).mouseup(function(){
+        isMove=false;
+    });
+</script>
+</body>
+</html>

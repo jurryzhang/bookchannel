@@ -1,0 +1,100 @@
+<empty name="chapterlist">
+    <p class="goods_title">抱歉暂时没有相关结果！</p>
+<else />
+    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td class="text-center">
+                        购买时间
+                    </td>
+
+                    <td class="text-center">
+                        用户名称
+                    </td>
+
+                    <td class="text-center">
+                        小说名称
+                    </td>
+
+                    <td class="text-center">
+                        章节名称
+                    </td>
+
+                    <td class="text-center">
+                        购买价格({$egold_name})
+                    </td>
+
+                    <td class="text-center">
+                        购买个数
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="chapterlist" id="chapter">
+                    <tr>
+                        <td class="text-center">
+                            {$chapter.buytime}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.username}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.obookname}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.chaptername}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.buyprice}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.buynum}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.channelname}
+                        </td>
+
+                        <td class="text-center">
+                            {$chapter.channeltype}
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-sm-3 text-left"></div>
+        <div class="col-sm-9 text-right">{$page}</div>
+    </div>
+</empty>
+
+<script>
+
+    // 点击分页触发的事件
+    $(".pagination  a").click(function()
+    {
+        cur_page = $(this).data('p');
+
+        ajax_get_table('search-form2',cur_page);
+    });
+
+
+    // 点击排序
+    function sort(field)
+    {
+        $("input[name='orderby1']").val(field);
+        var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';
+        $("input[name='orderby2']").val(v);
+
+        ajax_get_table('search-form2',cur_page);
+    }
+</script>

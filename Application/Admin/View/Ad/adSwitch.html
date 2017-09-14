@@ -1,0 +1,220 @@
+
+<include file="Public/min-header"/>
+<script src="/Public/js/clipboard.min.js"></script>
+<script src="/Public/js/switch/honeySwitch.js"></script>
+<link rel="stylesheet" href="/Public/js/switch/honeySwitch.css">
+
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        广告权限管理
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <if condition="$Think.cookie.uid gt 0">
+                    <div class="navbar navbar-default">
+                        <form action="__CONTROLLER__/adSwitch/" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+
+                                <label class="control-label" style="margin-top: -20px;font-size: 15px">全站广告开关:</label>
+                            <if condition="$sitead">
+                                <span class="switch-on" id="sitead" ></span>
+                                <else/>
+                                <span class="switch-off"   id="sitead" ></span>
+                            </if>
+                        </form>
+                    </div>
+                    </if>
+                    <empty name="channellist">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <if condition="$Think.cookie.permissions eq 1">
+                                        <td class="text-center">
+                                            ID
+                                        </td>
+                                        </if>
+
+                                        <td class="text-center">
+                                           渠道名称
+                                        </td>
+
+                                        <td class="text-center">
+                                            渠道类型
+                                        </td>
+
+                                        <td class="text-center">
+                                            添加时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            广告计划
+                                        </td>
+
+                                        <td class="text-center">
+                                            广告权限状态
+                                        </td>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="channellist" id="list">
+                                        <tr>
+                                            <if condition="$Think.cookie.permissions eq 1">
+                                            <td class="text-center">
+                                                {$list.channelid}
+                                            </td>
+                                            </if>
+
+                                            <td class="text-center">
+                                                {$list.channelname}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.channeltype}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.posttime|date='Y-m-d H:i:s',###}
+                                            </td>
+                                            <td class="text-center">
+                                                <if condition="$list.adplan eq 0">
+                                                    系统广告
+                                                    <elseif condition="$list.adplan eq 1"/>
+                                                    自己公众号引导
+                                                    <else/>
+                                                    自定义广告
+                                                </if>
+                                            </td>
+
+                                            <td class="text-center" >
+                                                    <if condition="$list.adpower eq 1">
+                                                        <span class="switch-on" id="ad{$list.channelid}" ></span>
+                                                        <else/>
+                                                        <span class="switch-off"   id="ad{$list.channelid}" ></span>
+                                                    </if>
+                                                <input type="hidden" class="addata" name="channelid" value="{$list.channelid}" />
+                                            </td>
+
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+
+    function del(id,obj)
+    {
+        layer.confirm('确定要删除吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/adDel/id/"+id,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                                $(obj).parent().parent().remove();
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+
+
+
+        return false;
+    }
+
+
+    //全站广告开关
+    $(function() {
+        switchEvent("#sitead", function () {
+            //次处写开的方法
+            $.get("__CONTROLLER__/siteAd/status/on",function (v) {
+                if (v.status == 1) {
+                    layer.msg(v.info, {icon: 1, time: 1000});
+                } else {
+                    layer.msg(v.info, {icon: 2, time: 1000});
+                }
+            });
+        }, function () {
+            //此处写关的方法
+                $.get("__CONTROLLER__/siteAd/status/off",function (v) {
+                    if (v.status == 1) {
+                        layer.msg(v.info, {icon: 1, time: 1000});
+                    } else {
+                        layer.msg(v.info, {icon: 2, time: 1000});
+                    }
+                });
+        })
+    });
+
+    //给开关绑定事件
+   function adswitch(id) {
+       switchEvent("#ad"+id, function () {
+           //次处写开的方法
+           $.get("__CONTROLLER__/setAdpower/status/on/id/"+id,function (v) {
+               if(v.status==1){
+                   layer.msg(v.info, {icon: 1,time: 1000});
+               }else {
+                   layer.msg(v.info, {icon: 2,time: 1000});
+               }
+           });
+       }, function () {
+           //此处写关的方法
+           $.get("__CONTROLLER__/setAdpower/status/off/id/"+id,function (v) {
+               if(v.status==1){
+                   layer.msg(v.info, {icon: 1,time: 1000});
+               }else {
+                   layer.msg(v.info, {icon: 2,time: 1000});
+               }
+           });
+       });
+   }
+
+   $(function () {
+       $.each($('.addata'),function (k,v) {
+           adswitch($(v).val());
+       })
+   });
+
+</script>
+</body>
+</html>

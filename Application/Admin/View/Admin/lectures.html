@@ -1,0 +1,57 @@
+		<include file="Public/min-header" />
+		<div class="wrapper">
+    		
+    		<section class="content " style="text-align: center;">
+        		<!-- Main content -->
+		        <div class="container-fluid" >
+		        <div class="center-block" style="width:1120px;height:60px;padding-top:1px;line-height:20px;background: white;">
+		        	<h1>推广教程</h1>
+		        </div>
+		            <p>
+		            	<img src="__PUBLIC__/images/jiaoc/1.png">
+		            </p>
+		            <p>
+		            	<img src="__PUBLIC__/images/jiaoc/2.png">
+		            </p>
+		            <p>
+		            	<img src="__PUBLIC__/images/jiaoc/3.png">
+		            </p>
+		            <p>
+		            	<img src="__PUBLIC__/images/jiaoc/4.png">
+		            </p>
+		            <p>
+		            	<img src="__PUBLIC__/images/jiaoc/5.png">
+		            </p>
+		            <p>
+		            	<img src="__PUBLIC__/images/jiaoc/6.png">
+		            </p>
+        		</div>
+    		</section>
+		</div>
+
+		<script>
+			function adsubmit()
+			{
+				if($('input[name=user_name]').val() == '')
+				{
+					layer.msg('用户名不能为空！', {icon: 2,time: 1000});   //alert('少年，用户名不能为空！');
+					return false;
+				}
+				
+				if($('input[name=email]').val() == '')
+				{
+					layer.msg('邮箱不能为空！', {icon: 2,time: 1000});//alert('少年，邮箱不能为空！');
+					return false;
+				}
+				
+				if($('input[name=password]').val() == '')
+				{
+					layer.msg('密码不能为空！', {icon: 2,time: 1000});//alert('少年，密码不能为空！');
+					return false;
+				}
+				
+				$('#adminHandle').submit();
+			}
+		</script>
+	</body>
+</html>

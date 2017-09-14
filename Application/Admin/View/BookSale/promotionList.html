@@ -1,0 +1,213 @@
+
+<include file="Public/min-header"/>
+<script src="/Public/js/clipboard.min.js"></script>
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        促销活动列表
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <if condition="$Think.cookie.permissions eq 1">
+                    <div class="navbar navbar-default">
+                        <form action="__CONTROLLER__/titleList/" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+
+
+                                <button type="button" onclick="location.href='__CONTROLLER__/promotionAdd.html'" class="btn btn-primary pull-left">
+                                    <i class="fa fa-plus"></i>添加促销活动
+                                </button>
+
+
+                        </form>
+                    </div>
+                    </if>
+                    <empty name="promotion">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <if condition="$Think.cookie.permissions eq 1">
+                                        <td class="text-center">
+                                            ID
+                                        </td>
+                                        </if>
+
+                                        <td class="text-center">
+                                            活动名称
+                                        </td>
+
+                                        <if condition="$Think.cookie.permissions eq 1">
+                                        <td class="text-center">
+                                            充值金额(元)
+                                        </td>
+
+                                        <td class="text-center">
+                                            赠送金额(元)
+                                        </td>
+
+                                        <td class="text-center">
+                                            开始时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            结束时间
+                                        </td>
+
+
+                                            <td class="text-center">
+                                                操作
+                                            </td>
+                                        </if>
+                                        <if condition="$Think.cookie.permissions eq 0">
+
+                                            <td class="text-center">
+                                                活动页面
+                                            </td>
+
+                                            <td class="text-center">
+                                                活动时间
+                                            </td>
+
+                                        </if>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="promotion" id="list">
+                                        <tr>
+                                            <if condition="$Think.cookie.permissions eq 1">
+                                            <td class="text-center">
+                                                {$list.id}
+                                            </td>
+                                            </if>
+
+                                            <td class="text-center">
+                                                {$list.title}
+                                            </td>
+
+                                            <if condition="$Think.cookie.permissions eq 0">
+                                                <td class="text-center">
+												<if condition="$list['endtime'] gt time()">
+                                                    <span id="saleurl{$list.id}">http://wap.kyread.com/User/buyEgold/saleid/{$list.id}/cid/{$Think.cookie.channelid}.html</span>  &nbsp;  &nbsp;
+                                                    <a id="copycurl" data-clipboard-target="#saleurl{$list.id}" href="javascript:void(0)" ><i class="fa fa-copy"></i> </a>
+													<else/>
+													活动已结束
+													</if>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    {$list.starttime|date='Y/m/d H:i:s',###} - {$list.endtime|date='Y/m/d H:i:s',###}
+                                                </td>
+
+                                            </if>
+
+                                            <if condition="$Think.cookie.permissions eq 1">
+                                            <td class="text-center">
+                                                {$list.paymoney}
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                {$list.givemoney}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.starttime|date='Y-m-d H:i:s',###}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.endtime|date='Y-m-d H:i:s',###}
+                                            </td>
+
+
+                                            <td class="text-center">
+
+                                                <if condition="$list.issend eq 0">
+                                                    <a href="__CONTROLLER__/promotionEdit/id/{$list.id}.html"  title="" class="btn btn-success" data-original-title="发送消息">
+                                                        <span>编辑</span>
+                                                    </a>
+                                                </if>
+                                                    <a href="javascript:void (0)" onclick="del({$list.id},this);" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除任务">
+                                                        <span>删除</span>
+                                                    </a>
+
+                                            </td>
+                                            </if>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+
+    function del(id,obj)
+    {
+        layer.confirm('确定要删除吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/promotionDel/id/"+id,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                                $(obj).parent().parent().remove();
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+
+
+
+        return false;
+    }
+
+
+    var clipboard = new Clipboard('#copycurl');
+    clipboard.on('success', function (e) {
+        layer.alert('复制链接成功!可以直接粘贴使用!');
+    });
+
+
+
+
+</script>
+</body>
+</html>

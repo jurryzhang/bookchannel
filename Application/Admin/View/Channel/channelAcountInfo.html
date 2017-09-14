@@ -1,0 +1,173 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <if condition = "$ischannel neq 1">
+        <include file="Public/breadcrumb"/>
+    </if>
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                    <i class="fa fa-reply">
+                    </i>
+                </a>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        <if condition = "$ischannel neq 1">
+                            渠道账户信息
+                        <else/>
+                            {$ischannelname}账户信息
+                        </if>
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center">
+                                            渠道名称
+                                        </td>
+
+                                        <td class="text-center">
+                                            对接小说数量
+                                        </td>
+
+                                        <td class="text-center">
+                                            总收益（元）
+                                        </td>
+
+                                        <td class="text-center">
+                                            已结算（元）
+                                        </td>
+
+                                        <td class="text-center">
+                                            待结算（元）
+                                        </td>
+
+                                        <td class="text-center">
+                                            分成比例
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                {$channel.channelname}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$channel.sumarticle}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$channel.sumemoney}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$channel.paidemoney}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$channel.remainemoney}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$channel.proportion}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="navbar navbar-default">
+                        <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                            <div class="form-group">
+                                <label class="control-label" for="input-order-id">关键词</label>
+                                <div class="input-group">
+                                    <input type="text" name="key_word" value="" placeholder="小说名称" id="input-order-id" class="form-control">
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" value="{$channel.id}" />
+
+                            <input type="hidden" name="orderby1" value="articleid" />
+
+                            <input type="hidden" name="orderby2" value="desc" />
+
+                            <button type="submit" onclick="ajax_get_table('search-form2',1)" id="button-filter search-order" class="btn btn-primary">
+                                <i class="fa fa-search"></i> 筛选
+                            </button>
+
+                            <if condition = "$ischannel neq 1">
+                                <button type="button" onclick="location.href='{:U('Admin/Channel/settlement',array('id' => $channel['id']))}'" class="btn btn-primary pull-right">
+                                    <i class="fa fa-plus"></i>结算
+                                </button>
+                            </if>
+                        </form>
+                    </div>
+                    <div id="ajax_return"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    $(document).ready(function()
+    {
+        // ajax 加载商品列表
+        ajax_get_table('search-form2',1);
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,page)
+    {
+        channelID = '{$channel.id}';
+
+        cur_page  = page; //当前页面 保存为全局变量
+
+        url       = "/index.php?m=Admin&c=Channel&a=ajaxChannelBookList&p=" + page + "&id=" + channelID;
+
+        $.ajax(
+        {
+            type    : "POST",
+            url     : url,
+            data    : $('#' + form).serialize(),// 你的formid
+            success : function(data)
+            {
+                $("#ajax_return").html('');
+
+                $("#ajax_return").append(data);
+            },
+            error   : function(data)
+            {
+                alert('error -- data = ' + data.responseText);
+            }
+        });
+    }
+
+    // 点击排序
+    function sort(field)
+    {
+        $("input[name='orderby1']").val(field);
+        var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';
+        $("input[name='orderby2']").val(v);
+
+        ajax_get_table('search-form2',cur_page);
+    }
+</script>
+</body>
+</html>

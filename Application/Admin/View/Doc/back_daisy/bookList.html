@@ -1,0 +1,237 @@
+<if condition = "$ischannel eq 1">
+    <include file="Public/header" />
+</if>
+
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        小说列表
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form action="__CONTROLLER__/bookList/" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+
+                                <div class="form-group" style="margin-left: 10px;">
+                                    <select id="channel" name="channel" class="form-control" style="width: 100px; display: inline-block;">
+                                        <option value=""  <if condition="($channel eq '全部')">selected="selected"</if> >全部</option>
+                                        <option value="通用" <if condition="($channel eq '通用')">selected="selected"</if> >通用</option>
+                                        <option value="男频" <if condition="($channel eq '男频')">selected="selected"</if> >男频</option>
+                                        <option value="女频" <if condition="($channel eq '女频')">selected="selected"</if> >女频</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" onclick="this.form.submit()" id="button-filter search-order" class="btn btn-primary">
+                                    <i class="fa fa-filter"></i> 筛选
+                                </button>
+
+
+                            <div class="form-group" style="margin-left: 40px;">
+                                <label class="control-label" for="input-order-id">章节数:</label>
+                                <div class="input-group">
+                                    <input  style="width: 65px;" size="2" maxlength="2" min="1" max="20" type="number" name="number" id="number" value="5" placeholder="章节数"  class="form-control">
+                                </div>
+                            </div>
+
+
+                            <!--章节选择-->
+
+                           <div class="form-group" style="margin-left: 40px;">
+                                <label class="control-label" for="input-order-id">选择渠道:</label>
+                                <select id="pt" name="pt" class="form-control" style="width: 150px; display: inline-block;">
+                                    <volist name="pt" id="list">
+                                    <option value="{$list.ptid}" >{$list.ptname}</option>
+                                    </volist>
+
+                                </select>
+                            </div>
+
+
+                            <div style="text-align: right;float: right; display: inline-table;margin-right: 20px;">
+                            <div class="form-group ">
+                                <div class="input-group">
+                                    <input type="text" name="keyword" value="" placeholder="小说名称" id="input-order-id" class="form-control">
+                                </div>
+                            </div>
+                            <button type="submit" onclick="this.form.submit()" id="button-filter search-order" class="btn btn-primary">
+                                <i class="fa fa-search"></i> 搜索
+                            </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <empty name="data">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                       <!--  <td class="text-center">
+                                           书号ID
+                                        </td> -->
+
+                                        <td class="text-center">
+                                            封面
+                                        </td>
+
+                                        <td class="text-center">
+                                            小说名称
+                                        </td>
+
+                                        <td class="text-center">
+                                            字数
+                                        </td>
+
+                                        <td class="text-center">
+                                            状态
+                                        </td>
+
+                                        <td class="text-center">
+                                            分类
+                                        </td>
+
+                                        <td class="text-center">
+                                            频道
+                                        </td>
+										
+										 <td class="text-center">
+                                            派单指数
+                                        </td>
+										
+                                        <td class="text-center">
+                                            操作
+                                        </td>
+                                       
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="data" id="list">
+                                        <tr style="">
+                                            <!-- <td class="text-center">
+                                                {$list.articleid}
+                                            </td> -->
+
+
+                                            <td class="text-center">
+                                                <a href="{:U('bookInfo',array('articleId'=>$list['articleid']))}" target="_blank">
+                                                <img width="50px" src="{$list.cover}">
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <a href="{:U('bookInfo',array('articleId'=>$list['articleid']))}" target="_self">
+                                                    <strong style="font-size: 14px;" > {$list.articlename}</strong>
+                                                </a>
+
+                                            </td>
+
+                                            <td class="text-center">
+
+                                                    <strong> {$list['size']/2/10000|round=###,1}万</strong>
+
+
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                <if condition="$list.fullflag neq '完本'">
+                                                <span class="badge bg-red">{$list.fullflag}</span>
+                                                    <else/>
+                                                    <span class="badge bg-green">{$list.fullflag}</span>
+                                                </if>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <if condition="$list.channel eq '女频'">
+                                                <span class="label label-warning">{$list.category}</span>
+                                                    <else/>
+                                                    <span class="label label-success">{$list.category}</span>
+                                                </if>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <if condition="$list.channel eq '女频'">
+                                                <span class="badge bg-red">{$list.channel}</span>
+                                                    <else/>
+                                                    <span class="badge bg-green">{$list.channel}</span>
+                                                </if>
+                                            </td>
+											
+											<td class="text-center">
+                                                {$list.orderby}
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                    <a href="javascript:void(0)"  onclick="mkDoc({$list.articleid})"  id="mkdoc" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="生成文案">
+                                                        <span>生成文案</span>
+                                                    </a>
+                                            </td>
+
+                                            
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+ <script>
+$('#number').change(
+    function () {
+        var num=$(this).val();
+        if(isNaN(num)){
+            $(this).val(5);
+        }
+        if(num<1){
+            $(this).val(1);
+        }else if(num>20){
+            $(this).val(20);
+        }
+
+    }
+)
+
+function mkDoc(id) {
+    var num=$('#number').val();
+    var ptid=$('#pt option:selected').val();
+    window.open("__CONTROLLER__/mkDoc/id/"+id+"/num/"+num+"/ptid/"+ptid);
+}
+
+</script>
+</body>
+</html>

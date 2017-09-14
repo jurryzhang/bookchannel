@@ -1,0 +1,229 @@
+<include file="Public/min-header" />
+<!--公共js 代码 -->
+<script src="__PUBLIC__/js/common.js" charset="utf-8"
+        type="text/javascript"></script>
+<!--公共js end代码 -->
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<div class="wrapper">
+    <include file="Public/breadcrumb" />
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+                   class="btn btn-default" data-original-title="返回"> <i
+                        class="fa fa-reply"> </i>
+                </a>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!--表单数据-->
+                    <form method="post" id="addEditChannelForm">
+                        <!--通用信息-->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            渠道名称:
+                                        </td>
+
+                                        <td>
+                                            <input type="text" value="{$channel.channelname}" name="channel_name" id='channel_name' class="form-control" style="width: 350px; display: inline-block" readonly/>
+
+                                            <span id="err_goods_name" style="color: #F00; display: inline-block;">
+                                                </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-center">
+                                            分成比例：
+                                        </td>
+
+                                        <td>
+                                            <input type="text" value="{$channel.proportion}" name="channel_proportion"  id='channel_proportion' class="input-sm" placeholder="请输入0 ~ 1之间的小数" onblur="checkProportion()" readonly/>
+
+                                            <span style="color: #F00;">
+                                                    该比例为渠道提供商所占比例，为小数，如：0.3，即该渠道供应商占收益的30%；
+                                                </span>
+
+                                            <span id="err_goods_sn"
+                                                  style="color: #F00; display: none;">
+                                                </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-center">
+                                            渠道类型:
+                                        </td>
+
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" name="channel_type" value="{$channel.channeltype}" placeholder="渠道类型"  id="start_time" class="input-sm" readonly>
+                                            </div>
+
+                                            <span style="color: #F00;">
+                                                    weixin->微信；android->安卓应用；ios->苹果应用..
+                                                </span>
+
+                                            <span id="err_cat_id" style="color: #F00; display: none;">
+                                                </span>
+                                        </td>
+                                    </tr>
+
+                                    <if condition = "$action neq 'add'">
+                                        <tr>
+                                            <td class="text-center">
+                                                渠道密钥:
+                                            </td>
+
+                                            <td>
+                                                <textarea rows="3" cols="50" name="channel_url" disabled="disabled">{$channel.secretkey}</textarea>
+
+                                                <span style="color: #F00;">
+                                                    一次生成不可修改！
+                                                </span>
+
+                                                <span id="err_cat_id" style="color: #F00; display: none;">
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                渠道链接:
+                                            </td>
+
+                                            <td>
+                                                <textarea rows="10" cols="50" name="channel_url" disabled="disabled">{$channel.url}</textarea>
+
+                                                <span style="color: #F00;">
+                                                    该url生成不可修改，分销渠道需要放到相应的跳转页面，否则不能进行相关的收益计算，由此产生的一切后果有分销渠道承担！；
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                微信渠道链接配置方法:
+                                            </td>
+
+                                            <td>
+                                                    <span style="color: #F00;">
+                                                        下面链接只是首页链接，如果需要跳转不同的页面，可以修改为不同的页面，修改方法为
+                                                        <p>
+                                                            <b>第一步</b>：在点击打开
+                                                            <a href="http://m.kyread.com/Index/index.html" target="_blank">http://m.kyread.com/Index/index.html；
+                                                            </a>
+                                                        </p>
+
+                                                        <p>
+                                                            <b>第二步</b>：选择将要在微信菜单中添加链接；
+
+                                                            比如要添加<a href="http://m.kyread.com/Index/getSortList.html" target="_blank">分类链接（点击打开）
+                                                            </a>
+                                                        </p>
+
+                                                        <p>
+                                                            <b>第三步</b>：选择将要在微信菜单中添加的链接复制到一个文本编辑器中；
+
+                                                            比如将要添加分类链接"http://m.kyread.com/Index/getSortList.html"复制到文本编辑器中。
+                                                        </p>
+
+                                                        <p>
+                                                            <b>第四步：</b>将下面微信渠道链接也复制到刚才打开的文本编辑器中；
+                                                        </p>
+
+                                                        <p>
+                                                            <b>第五步：</b>将要添加的链接中的http://m.kyread.com/'和'.html'之间部分进行复制到文本编辑器中，将'/'改为'-'，并复制；
+
+                                                            比如分类链接为"http://m.kyread.com/Index/getSortList.html"，将'Index/getSortList'复制到文本编辑器中，将将'/'改为'-'，即'Index/getSortList'改为'Index-getSortList'，并将'Index-getSortList'复制；
+                                                        </p>
+
+                                                        <p>
+                                                            <b>第六步：</b>用刚才复制的文字将下框中的微信渠道链接中的'/backurl/'后面的'Index-index'进行替换，就是自己的微信菜单中的链接；
+                                                        </p>
+                                                    </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                微信渠道链接:
+                                            </td>
+
+                                            <td>
+                                                <textarea rows="10" cols="50" name="channel_url" readonly="readonly">{$channel.weixinurl}</textarea>
+
+                                                <span style="color: #F00;">
+                                                        该url的生成要严格按照规则进行配置相应的谅解，否则不能进行相关的收益计算，由此产生的一切后果有分销渠道承担！；
+                                                    </span>
+                                            </td>
+                                        </tr>
+                                    </if>
+                                    <tbody />
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                    <!--表单数据-->
+
+                    <div id="ajax_return"></div>
+
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+                       class="btn btn-default" data-original-title="返回">
+                        返回
+                    </a>
+                </div><div class="pull-right">
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function()
+    {
+        var isChannel = {$ischannel};
+
+        alert('isChannel = ' + isChannel);
+
+        // ajax 加载商品列表
+        ajax_get_table('search-form2',1);
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=Channel&a=getChannelInfo",
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return").html('');
+
+                    $("#ajax_return").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+</script>
+
+</body>
+</html>

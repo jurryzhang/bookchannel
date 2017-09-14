@@ -1,0 +1,237 @@
+
+<include file="Public/min-header"/>
+<script src="/Public/js/clipboard.min.js"></script>
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        广告统计
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <empty name="statsList">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <if condition="$Think.cookie.permissions eq 1">
+                                        <td class="text-center">
+                                            ID
+                                        </td>
+                                        </if>
+
+                                        <td class="text-center">
+                                            广告标题
+                                        </td>
+
+                                        <td class="text-center">
+                                            展示渠道
+                                        </td>
+
+                                        <td class="text-center">
+                                            展现次数(pv)
+                                        </td>
+
+                                        <td class="text-center">
+                                           独立访客(uv)
+                                        </td>
+
+                                        <td class="text-center">
+                                            点击次数
+                                        </td>
+
+
+                                        <td class="text-center">
+                                            数据月份
+                                        </td>
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="statsList" id="list">
+                                        <tr onmouseover="isdefaultO({$list.id})" onmouseleave="isdefaultL({$list.id})">
+                                            <if condition="$Think.cookie.permissions eq 1">
+                                            <td class="text-center">
+                                                {$list.adid}
+                                            </td>
+                                            </if>
+
+                                            <td class="text-center">
+                                                {$list.title}
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                {$list.channelname}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.pv}
+                                            </td>
+                                            <td class="text-center">
+                                                {$list.uv}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.click}
+                                            </td>
+                                            <td class="text-center">
+                                                {$list.addtime|date='Y-m',###}
+                                            </td>
+
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+
+    function del(id,obj)
+    {
+        layer.confirm('确定要删除吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/adDel/id/"+id,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                                $(obj).parent().parent().remove();
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+        return false;
+    }
+
+
+
+
+
+    function setAdplan()
+    {
+       var plan= $('#adplan option:selected').val();
+        layer.confirm('确定要更改广告计划吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/setAdplan/plan/"+plan,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+        return false;
+    }
+
+    function setDisplay(obj,id)
+    {
+        var display= $(obj).attr('data-display')*1;
+        console.log(display);
+        if(display){
+            layer.confirm('确定要把当前广告屏蔽吗?',
+                function(){
+                    ajaxSetDisplay(!display,id,obj);
+                }
+
+            );
+        }else{
+            layer.confirm('确定要更改这条广告状态为显示状态?',
+                function(){
+                    ajaxSetDisplay(!display,id,obj);
+                }
+
+            );
+        }
+
+    }
+function ajaxSetDisplay(display,id,obj) {
+        if(display){
+            display=1;
+        }else {
+            display=0;
+        }
+    $.ajax(
+        {
+            url     : "__CONTROLLER__/setDisplay/id/"+id+"/display/"+display,
+            success : function(v)
+            {
+                if(v.status==1){
+                    layer.msg(v.info, {icon: 1,time: 1000});
+                    if(display){
+                       $(obj).attr('data-display','1');
+                       $(obj).removeClass('btn-danger');
+                       $(obj).addClass('btn-success');
+                       $(obj).html('<span>已启用</span>');
+                    }else {
+                        $(obj).attr('data-display','0');
+                        $(obj).removeClass('btn-success');
+                        $(obj).addClass('btn-danger');
+                        $(obj).html('<span>已屏蔽</span>');
+
+                    }
+
+                }else {
+                    layer.msg(v.info, {icon: 2,time: 1000});
+                }
+            }
+        });
+}
+
+function isdefaultO(id) {
+    $('#isdefault'+id).css('display','');
+}
+
+function isdefaultL(id) {
+    $('#isdefault'+id).css('display','none');
+}
+
+</script>
+</body>
+</html>

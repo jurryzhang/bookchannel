@@ -1,0 +1,199 @@
+
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        模版消息列表
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form action="__CONTROLLER__/titleList/" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+
+                                <!--<div class="form-group">
+                                    <select id="channel" name="channel" class="form-control" style="width: 350px; display: inline-block;">
+                                        <option value="" <if condition="($channel eq '全部')">selected="selected"</if> >全部</option>
+                                        <option value="通用" <if condition="($channel eq '通用')">selected="selected"</if> >通用</option>
+                                        <option value="男频" <if condition="($channel eq '男频')">selected="selected"</if> >男频</option>
+                                        <option value="女频" <if condition="($channel eq '女频')">selected="selected"</if> >女频</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="orderby1" value="articleid" />
+                                <input type="hidden" name="orderby2" value="desc" />
+
+                                <button type="submit" onclick="this.form.submit()" id="button-filter search-order" class="btn btn-primary">
+                                    <i class="fa fa-search"></i> 筛选
+                                </button>-->
+
+                                <button type="button" onclick="location.href='__CONTROLLER__/tplAdd.html'" class="btn btn-primary pull-left">
+                                    <i class="fa fa-plus"></i>添加模版消息
+                                </button>
+
+                        </form>
+                    </div>
+                    <empty name="tpllist">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center">
+                                            ID
+                                        </td>
+
+                                        <td class="text-center">
+                                            任务名称
+                                        </td>
+
+                                        <td class="text-center">
+                                            模版
+                                        </td>
+
+                                        <td class="text-center">
+                                            添加时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            发送时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            发送人数
+                                        </td>
+
+                                        <td class="text-center">
+                                            成功人数
+                                        </td>
+
+                                            <td class="text-center">
+                                                操作
+                                            </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="tpllist" id="list">
+                                        <tr>
+                                            <td class="text-center">
+                                                {$list.id}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.title}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.tpltitle}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.addtime|date='Y-m-d H:i:s',###}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.sendtime|date='Y-m-d H:i:s',###}
+                                                <if condition="$list.issend eq 0">
+                                                    <span class="badge bg-red">未发送</span>
+                                                    <elseif condition="$list.issend eq -1"/>
+                                                    <span class="badge bg-yellow">发送中</span>
+                                                        <else/>
+                                                    <span class="badge bg-green">已发送</span>
+                                                </if>
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.sendcount}
+                                            </td>
+
+                                            <td class="text-center">
+                                                {$list.okcount}
+                                            </td>
+
+
+
+                                            <td class="text-center">
+
+                                                <if condition="$list.issend eq 0">
+                                                    <a href="__CONTROLLER__/tplEdit/id/{$list.id}.html"  title="" class="btn btn-success" data-original-title="发送消息">
+                                                        <span>编辑</span>
+                                                    </a>
+                                                </if>
+                                                    <a href="javascript:void (0)" onclick="del({$list.id},this);" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除任务">
+                                                        <span>删除</span>
+                                                    </a>
+
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+
+    function del(id,obj)
+    {
+        layer.confirm('确定要删除吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/tplDel/id/"+id,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                                $(obj).parent().parent().remove();
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+
+
+
+        return false;
+    }
+
+
+
+
+
+
+</script>
+</body>
+</html>

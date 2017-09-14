@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	    <meta charset="UTF-8"/>
+	    <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+	    <title>免费读书 | {$web_name}</title>
+	    <!-- Tell the browser to be responsive to screen width -->
+	    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <!-- Bootstrap 3.3.4 -->
+	    <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	    <!-- FontAwesome 4.3.0 -->
+	 	<link href="__PUBLIC__/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	    <!-- Ionicons 2.0.0 --
+	    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+	    <!-- Theme style -->
+	    <link href="__PUBLIC__/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+	    <link href="__PUBLIC__/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />	    
+	    <!-- iCheck -->
+	    <!-- <link href="__PUBLIC__/plugins/iCheck/flat/green.css" rel="stylesheet" type="text/css" />  -->
+		<link href="__PUBLIC__/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" /> 
+	    <!--[if lt IE 9]>
+	        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	    <![endif]-->   
+	    <!-- jQuery 2.1.4 -->
+	    <script src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	    <script src="__PUBLIC__/js/common.js"></script>
+	    <!-- <script src="__PUBLIC__/js/upgrade.js"></script> --><!-- 升级文件的js，burn修改，不添加升级接口，2016-08-09， -->
+		<script src="__PUBLIC__/js/layer/layer.js"></script><!--弹窗js 参考文档 http://layer.layui.com/--> 
+		
+		<style type="text/css">
+	    	#riframe{min-height:inherit !important}
+	    </style>
+  	</head>
+  	
+	<!--<body class="skin-green-light sidebar-mini"   style="<?php if($ischannel) echo 'overflow:hidden;';?> margin:0 auto;display:block">-->
+
+	<if condition="$Think.cookie.permissions eq 0">
+		<body class="skin-blue-light  sidebar-mini"   style="margin:0 auto;display:block">
+	<else/>
+		<body class="skin-blue  sidebar-mini"   style="margin:0 auto;display:block">
+	</if>		
+			<div class="wrapper">
+  			<header class="main-header">
+      		    <!-- Logo -->
+				<if condition="$Think.cookie.permissions eq 0">
+      			<a href="{:U('Channel/index')}" class="logo">
+        			<!-- mini logo for sidebar mini 50x50 pixels -->
+        			<span class="logo-mini">
+        				<i class="glyphicon glyphicon-home"></i>
+        			</span>
+        			<!-- logo for regular state and mobile devices -->
+        			<img src="/Public/images/newLogo.png" width="150" height="60">
+      			</a>
+				<else/>
+					<a href="/" class="logo">
+						<!-- mini logo for sidebar mini 50x50 pixels -->
+						<span class="logo-mini">
+        				<i class="glyphicon glyphicon-home"></i>
+        			</span>
+						<!-- logo for regular state and mobile devices -->
+						<img src="/Public/images/newLogo.png" width="150" height="60">
+					</a>
+				</if>
+
+
+
+
+      			<!-- Header Navbar: style can be found in header.less -->
+      			<nav class="navbar navbar-static-top" role="navigation">
+        			<!-- Sidebar toggle button-->
+
+					<if condition = "$Think.cookie.permissions eq 1">
+						<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+							<span class="sr-only">Toggle navigation</span>
+						</a>
+					</if>
+
+					<div class="navbar-custom-menu" style="float: left;margin-top: 15px;">
+						<ul class="nav navbar-nav">
+					<if condition="$Think.cookie.permissions eq 0">
+						<a href="{:U('Doc/booklist')}" style=" color: #FFFFff;" target='rightContent'>
+							<i class="fa fa-book"></i>
+							<b>小说列表</b>
+						</a>
+
+						<ul  class="nav navbar-nav" style="margin-left: 100px;margin-top:-35px; position: absolute;">
+							<li class="dropdown user user-menu">
+								<a href="#"  id="user_name" data-toggle="dropdown">
+									<i class="fa fa-list"></i>
+									<b >渠道管理</b>
+								</a>
+
+								<ul class="dropdown-menu" id="user_option" style="display:none;width: 50px;">
+									<li class="user-footer" >
+										<div class="full-right">
+											<a style="width: 100%;" href="{:U('Channel/channelList1')}"  class="btn btn-default ">渠道列表</a>
+											<a style="width: 100%;" href="{:U('Channel/channelList2')}"  class="btn btn-default ">渠道信息</a>
+											<a style="width: 100%;" href="{:U('Channel/addSchannel')}" class="btn btn-default ">添加渠道</a>
+
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+
+						<a href="{:U('Channel/channelBankinfo')}" style=" color: #FFFFff;margin-left: 170px;" target='rightContent'>
+							<i class="fa fa-money"></i>
+							<b>财务信息</b>
+						</a>
+						<ul  class="nav navbar-nav" style="margin-left: 350px;margin-top:-35px; position: absolute;">
+							<li class="dropdown wx wx-menu">
+								<a href="#"  id="wx_name" data-toggle="dropdown">
+									<i class="fa fa-list"></i>
+									<b >公众号配置</b>
+								</a>
+
+								<ul class="dropdown-menu" id="wx_option" style="display:none;width: 50px;">
+									<li class="wx-footer" >
+										<div class="full-right">
+											<a style="width: 100%;" href="{:U('Channel/wxSet')}"  class="btn btn-default ">设置公众号</a>
+											<!--<a style="width: 100%;" href="{:U('Channel/wxMenu')}" class="btn btn-default ">生成菜单</a>-->
+											<a style="width: 100%;" href="#" class="btn btn-default ">生成菜单</a>
+
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<a href="{:U('Channel/channelAffiche')}" style=" color: #FFFFff;margin-left:170px;" target='rightContent'>
+							<i class="fa fa-book"></i>
+							<b>公告信息</b>
+						</a>
+
+
+
+					</if>
+						</ul>
+
+
+
+					</div>
+
+	        		<div class="navbar-custom-menu">
+	          			<ul class="nav navbar-nav">
+	          				<!-- burn修改，2016-08-10，取消升级功能 -->
+	          				<!-- <if condition="$upgradeMsg[0] neq null">
+	               				<li>
+	                  				<a href="javascript:void(0);" id="a_upgrade">
+	                      				<i class="glyphicon glyphicon-upload"></i>
+	                      				<span  style="color:#FF0;">{$upgradeMsg.0}&nbsp;</span>
+	                  				</a>
+	               				</li>
+	           				</if> -->
+
+	           				<li>
+								<if condition="$Think.cookie.permissions eq 0">
+								<a href="{:U('Channel/index')}" target="_blank">
+									<i class="glyphicon glyphicon-home"></i>
+									<span>网站前台</span>
+								</a>
+								<else/>
+									<a href="{$web_domain_url}" target="_blank">
+										<i class="glyphicon glyphicon-home"></i>
+										<span>网站前台</span>
+									</a>
+								</if>
+	           				</li>
+
+							<if condition="$Think.cookie.permissions eq 1">
+								<li>
+									<a target="_blank" onclick="clean()">
+										<i class="glyphicon glyphicon glyphicon-refresh"></i>
+										<span>清除缓存</span>
+									</a>
+								</li>
+							</if>
+
+							<if condition = "$Think.cookie.permissions eq 1">
+								<li class="dropdown user user-menu">
+									<a href="#" class="dropdown-toggle" id="user_name" data-toggle="dropdown">
+										<!--  <img src="__PUBLIC__/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
+										<i class="glyphicon glyphicon-user"></i>
+										<span class="hidden-xs">欢迎：{$admin_info.name}</span>
+									</a>
+
+									<ul class="dropdown-menu" id="user_option" style="display:none;width: 192px">
+										<li class="user-footer" >
+											<div class="pull-left">
+												<a href="javascript:void(0)" data-url="{:U('Index/map')}" class="btn btn-default btn-flat model-map">网站地图</a>
+												<a href="{:U('Admin/logout')}" class="btn btn-default btn-flat">安全退出</a>
+											</div>
+										</li>
+									</ul>
+								</li>
+							<else />
+								<li class="dropdown user user-menu">
+									<a class="dropdown-toggle" id="user_name" data-toggle="dropdown">
+										<!--  <img src="__PUBLIC__/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
+										<i class="glyphicon glyphicon-user"></i>
+										<span class="hidden-xs">欢迎：{$Think.cookie.channelname}</span>
+									</a>
+								</li>
+
+								<li>
+									<a  href="{:U('Admin/logout')}" >
+										<i class="fa fa-street-view"></i>
+										安全退出
+									</a>
+								</li>
+							</if>
+
+								<!-- Control Sidebar Toggle Button -->
+								<li>
+									<a href="#" data-toggle="control-sidebar">
+										<i class="fa fa-street-view"></i>换肤
+									</a>
+								</li>
+
+	          			</ul>
+	        		</div>
+	     		</nav>
+				
+	     		<script>
+	     			$(function()
+					{
+	     				$('#user_name').mouseover(function()
+                    {
+                        $('#user_option').show();
+                    });
+
+                        $('#user_name').mouseout(function()
+                        {
+                            $('#user_option').hide();
+                        });
+
+                        $('#user_option').mouseover(function()
+                        {
+                            $('#user_option').show();
+                        });
+
+                        $('#user_option').mouseout(function()
+                        {
+                            $('#user_option').hide();
+                        });
+
+
+
+                        $('#wx_name').mouseover(function()
+                        {
+                            $('#wx_option').show();
+                        });
+
+                        $('#wx_name').mouseout(function()
+                        {
+                            $('#wx_option').hide();
+                        });
+
+                        $('#wx_option').mouseover(function()
+                        {
+                            $('#wx_option').show();
+                        });
+
+                        $('#wx_option').mouseout(function()
+                        {
+                            $('#wx_option').hide();
+                        });
+
+
+
+	     			})
+
+					function clean()
+					{
+						var url = "{:U('Index/clean')}";
+
+                        $.ajax(
+						{
+							type    : "GET",
+							url     : url,
+							success : function(data)
+							{
+								alert(data);
+							},
+							error   : function(data)
+							{
+								alert('error -- data = ' + data.responseText);
+							}
+						});
+                    }
+	     		</script>
+	  		</header>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	    <meta charset="UTF-8"/>
+	    <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+	    <title>快阅云 | {$web_name}</title>
+	    <!-- Tell the browser to be responsive to screen width -->
+	    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- Bootstrap 3.3.4 -->
+	    <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	    <!-- FontAwesome 4.3.0 -->
+	 	<link href="__PUBLIC__/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	    <!-- Ionicons 2.0.0 --
+	    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+	    <!-- Theme style -->
+	    <link href="__PUBLIC__/dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+	    <link href="__PUBLIC__/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />	    
+	    <!-- iCheck -->
+	    <!-- <link href="__PUBLIC__/plugins/iCheck/flat/green.css" rel="stylesheet" type="text/css" />  -->
+		<link href="__PUBLIC__/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" /> 
+	    <!--[if lt IE 9]>
+	        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	    <![endif]-->   
+	    <!-- jQuery 2.1.4 -->
+	    <script src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	    <script src="__PUBLIC__/js/common.js"></script>
+	    <!-- <script src="__PUBLIC__/js/upgrade.js"></script> --><!-- 升级文件的js，burn修改，不添加升级接口，2016-08-09， -->
+		<script src="__PUBLIC__/js/layer/layer.js"></script><!--弹窗js 参考文档 http://layer.layui.com/--> 
+		<script src="__PUBLIC__/js/jquery-table-color.js"></script>
+		
+		<script src="/Public/js/clipboard.min.js"></script>
+		<style type="text/css">
+	    	#riframe{min-height:inherit !important}
+			
+	    	#riframe{min-height:inherit !important}
+			.alertBox{display:none;width:100%;height:100%;position:relative;top:0;left:0;z-index:1;}
+			.alertBox .mark{
+				width:100%;height:100%;
+				position:fixed;top:0;left:0;
+				background:#000;opacity:0.3;
+			}
+			.alertBox .alert{
+				display:none;
+				width: 700px;height:498px;
+				background:#FFF;
+				position:fixed;top:50%;left:50%;
+				z-index:9;
+			}
+			.alertBox .alt-header{
+				cursor:move;
+				padding:4px 17px;
+				height:7%;line-height:20px;
+				font-size:17px;
+				border-bottom: 1px solid #CCCCCC;
+			}
+			.alertBox .alt-header .icon{
+				float:right;
+				cursor:pointer;
+				font-style:normal;
+			}
+			.alertBox .alt-body{
+				padding:10px 26px;
+			}
+			.alertBox .alt-body tr td{
+				padding:8px 20px;
+			}
+			.alertBox .alt-footer{
+				text-align: right;
+				margin-right: 10px;
+				border-top: 1px solid #CCCCCC;
+			}
+	    </style>
+  	</head>
+  	
+	<!--<body class="skin-green-light sidebar-mini"   style="<?php if($ischannel) echo 'overflow:hidden;';?> margin:0 auto;display:block">-->
+
+	
+		<body class="skin-blue  sidebar-mini"   style="margin:0 auto;display:block">
+		
+			<div class="wrapper">
+  			<header class="main-header">
+      		    <!-- Logo -->
+				<if condition="$Think.cookie.permissions eq 0">
+      			<a href="{:U('Index/index')}" class="logo" style="background-color: #222d32;color: #fff;">
+        			<!-- mini logo for sidebar mini 50x50 pixels -->
+        			<span class="logo-mini">
+        				<i class="glyphicon glyphicon-home"></i>
+        			</span>
+        			<!-- logo for regular state and mobile devices -->
+        			<!-- <img src="/Public/images/newLogo.png" width="150" height="60"> -->首页
+      			</a>
+				<else/>
+					<a href="/" class="logo" style="background-color: #222d32;color: #fff;">
+						<!-- mini logo for sidebar mini 50x50 pixels -->
+						<span class="logo-mini">
+        				<i class="glyphicon glyphicon-home"></i>
+        			</span>
+						<!-- logo for regular state and mobile devices -->
+						<!-- <img src="/Public/images/newLogo.png" width="150" height="60"> -->首页
+					</a>
+				</if>
+
+      			<!-- Header Navbar: style can be found in header.less -->
+      			<nav class="navbar navbar-static-top" role="navigation" style="background-color: #222d32;color: #fff;">
+        		
+
+						<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+							<span class="sr-only">Toggle navigation</span>
+						</a>
+					
+	        		<div class="navbar-custom-menu">
+	          			<ul class="nav navbar-nav">
+	          				
+
+	           				<li>
+								<if condition="$Think.cookie.permissions eq 0">
+								<!-- <a href="{:U('Channel/index')}" target="_blank">
+									<i class="glyphicon glyphicon-home"></i>
+									<span>网站前台</span>
+								</a> -->
+								<else/>
+									<a href="{$web_domain_url}" target="_blank">
+										<i class="glyphicon glyphicon-home"></i>
+										<span>网站前台</span>
+									</a>
+								</if>
+	           				</li>
+
+							
+
+							<li class="dropdown user user-menu">
+								<a href="#" class="dropdown-toggle" id="user_nameZ" data-toggle="dropdown">
+									<!--  <img src="__PUBLIC__/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
+									<i class="glyphicon glyphicon-user"></i>
+									<if condition = "$Think.cookie.permissions eq 1">
+										<span class="hidden-xs">欢迎：{$admin_info.name}</span>
+										<else/>
+										<span class="hidden-xs">欢迎：{$Think.cookie.uname}</span>
+									</if>
+								</a>
+								<ul class="dropdown-menu" id="user_optionZ" style="display:none;width: 192px">
+									<li class="user-footer" >
+										<div class="pull-right">
+											<if condition = "$Think.cookie.permissions eq 1">
+												<a href="javascript:void(0)" data-url="{:U('Index/map')}" class="btn btn-default btn-flat model-map">网站地图</a>
+											</if>
+											<a href="{:U('Admin/logout')}" class="btn btn-default btn-flat">安全退出</a>
+										</div>
+									</li>
+								</ul>
+							</li>
+
+								<!-- Control Sidebar Toggle Button -->
+							<!-- <if condition="$Think.cookie.permissions eq 1">
+								<li>
+									<a href="#" data-toggle="control-sidebar">
+										<i class="fa fa-street-view"></i>换肤
+									</a>
+								</li>
+							</if> -->
+
+	          			</ul>
+	        		</div>
+	     		</nav>
+				
+	     		<script>
+	     			$(function()
+					{
+	     				/*$('#user_name').mouseover(function()
+						{
+                        $('#user_option').show();
+						});
+                        $('#user_name').mouseout(function()
+                        {
+                            $('#user_option').hide();
+                        });*/
+                        $('#user_option').mouseover(function()
+                        {
+                            $('#user_option').show();
+                        });
+                        $('#user_option').mouseout(function()
+                        {
+                            $('#user_option').hide();
+                        });
+						/************************start**************************/
+                        $('#user_nameZ').mouseover(function()
+                        {
+                            $('#user_optionZ').show();
+                        });
+                        $('#user_nameZ').mouseout(function()
+                        {
+                            $('#user_optionZ').hide();
+                        });
+                        $('#user_optionZ').mouseover(function()
+                        {
+                            $('#user_optionZ').show();
+                        });
+                        $('#user_optionZ').mouseout(function()
+                        {
+                            $('#user_optionZ').hide();
+                        });
+                        /*************************end************************/
+
+
+
+                        $('#wx_name').mouseover(function()
+                        {
+                            $('#wx_option').show();
+                        });
+
+                        $('#wx_name').mouseout(function()
+                        {
+                            $('#wx_option').hide();
+                        });
+
+                        $('#wx_option').mouseover(function()
+                        {
+                            $('#wx_option').show();
+                        });
+
+                        $('#wx_option').mouseout(function()
+                        {
+                            $('#wx_option').hide();
+                        });
+
+						
+						 $('#pt_name').mouseover(function()
+                        {
+                            $('#pt_option').show();
+                        });
+
+                        $('#pt_name').mouseout(function()
+                        {
+                            $('#pt_option').hide();
+                        });
+
+                        $('#pt_option').mouseover(function()
+                        {
+                            $('#pt_option').show();
+                        });
+
+                        $('#pt_option').mouseout(function()
+                        {
+                            $('#pt_option').hide();
+                        });
+                        $('#money_name').mouseover(function()
+                        {
+                            $('#money_option').show();
+                        });
+
+                        $('#money_name').mouseout(function()
+                        {
+                            $('#money_option').hide();
+                        });
+
+                        $('#money_option').mouseover(function()
+                        {
+                            $('#money_option').show();
+                        });
+
+                        $('#money_option').mouseout(function()
+                        {
+                            $('#money_option').hide();
+                        });
+						
+						
+						//特殊链接菜单
+                        $('#url_name').mouseover(function()
+                        {
+                            $('#url_option').show();
+                        });
+
+                        $('#url_name').mouseout(function()
+                        {
+                            $('#url_option').hide();
+                        });
+
+                        $('#url_option').mouseover(function()
+                        {
+                            $('#url_option').show();
+                        });
+
+                        $('#url_option').mouseout(function()
+                        {
+                            $('#url_option').hide();
+                        });
+
+						
+                        /*********广告业务**********/
+
+                        $('#ad_name').mouseover(function()
+                        {
+                            $('#ad_option').show();
+                        });
+
+                        $('#ad_name').mouseout(function()
+                        {
+                            $('#ad_option').hide();
+                        });
+
+                        $('#ad_option').mouseover(function()
+                        {
+                            $('#ad_option').show();
+                        });
+
+                        $('#ad_option').mouseout(function()
+                        {
+                            $('#ad_option').hide();
+                        });
+
+
+
+
+
+	     			})
+
+					function clean()
+					{
+						var url = "{:U('Index/clean')}";
+
+                        $.ajax(
+						{
+							type    : "GET",
+							url     : url,
+							success : function(data)
+							{
+								alert(data);
+							},
+							error   : function(data)
+							{
+								alert('error -- data = ' + data.responseText);
+							}
+						});
+                    }
+	     		</script>
+	  		</header>

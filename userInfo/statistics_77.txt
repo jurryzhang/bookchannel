@@ -1,0 +1,1 @@
+{"sumUser":39,"sumUserFocus":12,"sumUserSex1":4,"sumUserSex2":3,"sumUserSex0":32,"sumUserPay":2,"monthUser":0,"monthUserFocus":0,"monthUserSex1":0,"monthUserSex2":0,"monthUserSex0":0,"monthUserPay":0,"yesterdayUser":"0","yesterdayUserFocus":"0","yesterdayUserSex1":"0","yesterdayUserSex2":"0","yesterdayUserSex0":"0","yesterdayUserPay":0,"today":"20170830"}

@@ -1,0 +1,108 @@
+<include file="Public/min-header" />
+<!--公共js 代码 -->
+<script src="__PUBLIC__/js/common.js" charset="utf-8"
+        type="text/javascript"></script>
+<!--公共js end代码 -->
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<div class="wrapper">
+    <include file="Public/breadcrumb" />
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+                   class="btn btn-default" data-original-title="返回"> <i
+                        class="fa fa-reply"> </i>
+                </a>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"> </i>
+                        添加公告
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <!--表单数据-->
+                    <form method="post" id="addAffiche" action="">
+                        <!--通用信息-->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            公告标题
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="title" id='title' class="form-control" style="width: 50%; display: inline-block" />
+                                            <span id="err_title" style="color: #F00; display: inline-block;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            公告内容:
+                                        </td>
+                                        <td>
+                                            <textarea id="editor_id" rows="30" cols="100%" name="content">
+                                            </textarea>
+                                        </td>
+                                    </tr>
+                                    <tbody />
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="btn btn-primary" title="" data-toggle="tooltip" type="submit" data-original-title="保存">
+                                保存
+                            </button>
+                            <a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+                               class="btn btn-default" data-original-title="返回"> 取消
+                            </a>
+                        </div>
+                    </form>
+                    <!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script charset="utf-8" src="__PUBLIC__/plugins/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="__PUBLIC__/plugins/kindeditor/lang/zh-CN.js"></script>
+<script>
+    //编辑器
+    KindEditor.options.filterMode = false;
+    KindEditor.ready(function(K) {
+        window.editor = K.create('#editor_id');
+    });
+    function isPirce(s){
+        s = $.trim(s);
+//        var p =/^[1-9](\d+(\.\d{1,2})?)?$/;
+        var p1=/^[0-9](\.\d{1,2})?$/;
+        return p1.test(s);
+    }
+
+    function saveAction() {
+        var channelName      = $('#title').val();
+        var proportion       = $('#channel_proportion').val();
+        var readchaptercount = $('#channel_readchaptercount').val();
+
+        $('#err_title').text('');
+        if (channelName==''||proportion=='') {
+            if (check_text_isNULL(channelName)) {
+                $('#err_title').text('不能为空!');
+            }
+        } else {
+            ajax_submit_form('addEditChannelForm','{:U("Channel/addEditChannel?is_ajax=1")}');
+        }
+    }
+</script>
+</body>
+</html>

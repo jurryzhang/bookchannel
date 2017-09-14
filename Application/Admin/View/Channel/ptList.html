@@ -1,0 +1,106 @@
+
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+    
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+	
+	 <form id="search-form2">
+        <input  type="hidden" name="channelid" value="{$channelid}">
+    </form>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <if condition = "$ischannel neq 1">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            </if>
+
+            <div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i>
+						推广链接信息
+					</h3>
+				</div>
+                
+                <div class="panel-body">
+                      <div id="ajax_return_paylog"></div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    $(document).ready(function()
+    {
+        ajax_get_paylog('search-form2',1);
+
+    });
+
+
+    // 删除操作
+    function del(id)
+    {
+        if(!confirm('确定要删除吗?'))
+        {
+            return false;
+        }
+
+        $.ajax(
+            {
+                url     : "/index.php?m=Admin&c=Channel&a=delChannel&id="+id,
+                success : function(v)
+                {
+                    var v =  eval('('+v+')');
+
+                    if(v.hasOwnProperty('status') && (v.status == 1))
+                    {
+                        ajax_get_table('search-form2',cur_page);
+                    }
+                    else
+                    {
+                        layer.msg(v.msg, {icon: 2,time: 1000}); //alert(v.msg);
+                    }
+                }
+            });
+
+        return false;
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_paylog(form,page)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=Channel&a=ajaxPtList&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_paylog").html('');
+
+                    $("#ajax_return_paylog").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+</script>
+</body>
+</html>

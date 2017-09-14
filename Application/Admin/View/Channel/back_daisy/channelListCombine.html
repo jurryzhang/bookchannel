@@ -1,0 +1,258 @@
+<if condition = "$Think.cookie.permissions eq 0">
+    <include file="Public/header" />
+</if>
+
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+    <if condition = "$ischannel neq 1">
+        <include file="Public/breadcrumb"/>
+    </if>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <!--主渠道信息-->
+        <div class="container-fluid">
+            <if condition = "$Think.cookie.permissions eq 0">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>
+                            渠道汇总
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <if condition = "$Think.cookie.permissions eq 0">
+                            <empty name="channelSelf">
+                                <p class="goods_title">抱歉暂时没有相关结果！</p>
+                                <else />
+                                <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                 <!-- <td class="text-center">
+													ID
+												</td>-->
+
+												<td class="text-center">
+													代理名称
+												</td>
+												<td class="text-center">
+													佣金比例
+												</td>
+												<td class="text-right">
+													今日充值金额
+												</td>
+												<td class="text-center">
+													今日新增用户
+												</td>
+
+												<td class="text-right">
+													今日新增关注
+												</td>
+
+												<td class="text-center">
+													新增用户
+												</td>
+
+												<td class="text-right">
+													新增关注
+												</td>
+
+												
+
+												<if condition = "$ischannel eq 1">
+													<td class="text-center">
+														成本
+													</td>
+												</if>
+
+												<td class="text-right">
+													总充值金额
+												</td>
+
+												<td class="text-center">
+													操作
+												</td>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <volist name="channelSelf" id="list">
+                                                <tr>
+                                                    <!-- <td class="text-center">
+                            {$list.channelid}
+                        </td>-->
+
+                        <td class="text-center">
+                            <a href="{:U('Admin/channel/ptList',array('id' => $list['channelid']))}">
+                                <span  style="font-size:14px;">{$list.channelname}</span>
+                            </a>
+                        </td>
+						
+						 <td class="text-center">
+                            <span  style="font-size:14px;">{$list.proportion}</span>
+                        </td>
+
+
+                        <td class="text-right">
+                            <span  style="font-size:14px;">{$list.daysumpaybyid}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;">{$list.todaypaylogsum}笔</p>
+                        </td>
+
+                        <td class="text-center">
+                            <span  style="font-size:14px;">{$list.todayusersum}</span>
+                        </td>
+
+                        <td class="text-right">
+                            <span  style="font-size:14px;">{$list.todayfollowusersum}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;">关注率 {$list['todayfollowusersum']/$list['todayusersum']*100|round=###,0}%</p>
+                        </td>
+
+                        <td class="text-center">
+                            <span  style="font-size:14px;">{$list.usersum}</span>
+                        </td>
+ 
+                        <td class="text-right" style="font-size:16px;">
+                            <span  style="font-size:14px;">{$list.followusersum}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;">关注率 {$list['followusersum']/$list['usersum']*100|round=###,0}%</p>
+                        </td>
+
+                       
+                        <td class="text-center">
+                            <span  style="font-size:14px;">{$list.cost}</span>
+                        </td>
+
+                        <td class="text-right">
+                            <!-- {$list['paidmoney']/$list['proportion']+$list['remainmoney']|round=###,2} -->
+							<span  style="font-size:14px;">{$channelSumPay}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;"> {$list.paylogsum}笔</p>
+                        </td>
+
+                                                    <td class="text-center">
+                                                        <a href="{:U('Admin/Channel/editSChannel',array('id' => $list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-success" data-original-title="编辑信息" target="rightContent">
+                                                            <span>编辑</span>
+                                                        </a>
+
+                                                        <a href="{:U('Channel/remainMoney',array('channelid'=>$list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-success" data-original-title="结算统计" target="rightContent">
+                                                            <span>结算</span>
+                                                        </a>
+
+                                                        <a href="{:U('Admin/User/channelPayLogListByChannleID',array('id' => $list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情" target="rightContent">
+                                                            <span>充值</span>
+                                                        </a>
+                                                        <a href="{:U('Admin/User/channelUserListByChannleID',array('id' => $list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情" target="rightContent">
+                                                            <span>用户</span>
+                                                        </a>
+
+                                                    </td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-sm-3 text-left"></div>
+                                    <div class="col-sm-9 text-right">{$page}</div>
+                                </div>
+                            </empty>
+                        </if>
+                    </div>
+                </div>
+            </if>
+        </div>
+
+        <!--渠道列表-->
+        <div class="container-fluid">
+            <if condition="($Think.cookie.pid eq 0)AND($Think.cookie.permissions eq 0)">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>
+                            代理列表
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <if condition = "$Think.cookie.permissions eq 0">
+                            <div id="ajax_return_channel"></div>
+                        </if>
+                    </div>
+                </div>
+            </if>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    $(document).ready(function()
+    {
+        // ajax 加载商品列表
+        ajax_get_table('search-form2',1);
+
+        
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,page,ischannel)
+    {
+        cur_page = page; //当前页面 保存为全局变量
+
+        $.ajax(
+            {
+                type    : "POST",
+                url     : "./index.php?m=Admin&c=Channel&a=ajaxChannelListCombine&p="+page,
+                data    : $('#' + form).serialize(),// 你的formid
+                success : function(data)
+                {
+                    $("#ajax_return_channel").html('');
+
+                    $("#ajax_return_channel").append(data);
+                },
+                error   : function(data)
+                {
+                    alert('error -- data = ' + data.responseText);
+                }
+            });
+    }
+
+    // 删除操作
+    function del(id)
+    {
+        if(!confirm('确定要删除吗?'))
+        {
+            return false;
+        }
+
+        $.ajax(
+            {
+                url     : "/index.php?m=Admin&c=Channel&a=delChannel&id="+id,
+                success : function(v)
+                {
+                    var v =  eval('('+v+')');
+
+                    if(v.hasOwnProperty('status') && (v.status == 1))
+                    {
+                        ajax_get_table('search-form2',cur_page);
+                    }
+                    else
+                    {
+                        layer.msg(v.msg, {icon: 2,time: 1000}); //alert(v.msg);
+                    }
+                }
+            });
+
+        return false;
+    }
+
+ 
+</script>
+</body>
+</html>

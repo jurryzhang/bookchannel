@@ -1,0 +1,245 @@
+	<include file="Public/min-header" />
+	<div class="wrapper">
+		<include file="Public/breadcrumb"/>
+		<section class="content">
+			<div class="row">
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-orange">
+							<i class="fa fa-money"></i>
+						</span>
+						<div class="info-box-content">
+							<a href="{:U('Index/newPayLog')}">
+								<span class="info-box-text">当日充值</span>
+								<span class="info-box-number">
+									{$daySumPay}
+								</span>
+								<!-- <p style="color:#aaa;font-size:12px;">笔数 {$daypayCount}</p> -->
+								<div style="color:#aaa;font-size:12px; float:right;">
+									<p style="color:#aaa;font-size:12px;line-height: 4px">已充值 ： {$daypayCount}笔</p>
+									<p style="color:#aaa;font-size:12px;line-height: 4px">未充值 ： {$dayUnpayCount}笔</p>
+									<p style="color:#aaa;font-size:12px;line-height: 4px">完成率 ： {$daypayCount/($daypayCount+$dayUnpayCount)*100|round=###,0}%</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-orange">
+							<i class="fa fa-money"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">昨日充值</span>
+							<span class="info-box-number">{$yesterdaySumPay}</span>
+							<!-- <p style="color:#aaa;font-size:12px;">笔数 {$yesterdaypayCount}</p> -->
+							<div style="color:#aaa;font-size:12px; float:right;">
+								<p style="color:#aaa;font-size:12px;line-height: 4px">已充值 ： {$yesterdaypayCount}笔</p>
+								<p style="color:#aaa;font-size:12px;line-height: 4px">未充值 ： {$yesterdayUnpayCount}笔</p>
+								<p style="color:#aaa;font-size:12px;line-height: 4px">完成率 ： {$yesterdaypayCount/($yesterdaypayCount+$yesterdayUnpayCount)*100|round=###,0}%</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-orange">
+							<i class="fa fa-money"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">本月充值</span>
+							<span class="info-box-number">
+								{$monthSumPay}
+							</span>
+							<!--<p style="color:#aaa;font-size:12px;">笔&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数 {$monthpayCount}</p>-->
+							<span style="color:#aaa;font-size:12px;margin-top: 20px;">充值人数 {$sumMonthPeopleNum}</span>
+							<div style="color:#aaa;font-size:12px; float:right;">
+								<p style="color:#aaa;font-size:12px;line-height: 4px">已充值 ： {$monthpayCount}笔</p>
+								<p style="color:#aaa;font-size:12px;line-height: 4px">未充值 ： {$monthUnpayCount}笔</p>
+								<p style="color:#aaa;font-size:12px;line-height: 4px">完成率 ： {$monthpayCount/($monthpayCount+$monthUnpayCount)*100|round=###,0}%</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-blue">
+							<i class="fa fa-tags"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">累计充值</span>
+							<span class="info-box-number">
+								{$sumPay}
+							</span>
+							<!--<p style="color:#aaa;font-size:12px;">笔&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数 {$sumpayCount}</p>-->
+							<span style="color:#aaa;font-size:12px;margin-top: -10px;margin-bottom: -10px;">充值人数 {$sumPayPeopleNum}</span>
+							<div style="color:#aaa;font-size:12px; float:right;">
+								<p style="color:#aaa;font-size:12px;line-height: 4px">已充值 ： {$sumpayCount}笔</p>
+								<p style="color:#aaa;font-size:12px;line-height: 4px">未充值 ： {$sumUnpayCount}笔</p>
+								<p style="color:#aaa;font-size:12px;line-height: 4px">完成率 ： {$sumpayCount/($sumpayCount+$sumUnpayCount)*100|round=###,0}%</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-orange">
+							<i class="fa fa-user"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">今日新增关注</span>
+							<span class="info-box-number">
+								{$curDayFocus}
+							</span>
+							<p style="color:#aaa;font-size:12px;">关注率 {$curDayFocus/$curDayReader*100|round=###,0}%</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-yellow">
+							<i class="fa fa-user"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">今日新增用户</span>
+							<span class="info-box-number">
+								{$curDayReader}
+							</span>							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-orange">
+							<i class="fa fa-user"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">累计关注</span>
+							<span class="info-box-number">
+								{$allFocus}
+							</span>
+							<p style="color:#aaa;font-size:12px;">关注率 {$allFocus/$count['users']*100|round=###,0}%</p>
+							<p style="color:#aaa;font-size:12px; float:right;line-height:2px;">今日签到:{$count.daysign}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-red">
+							<i class="fa fa-user-plus"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">累计用户</span>
+							<span class="info-box-number">{$count.users}</span>
+						</div>
+					</div>
+				</div>
+
+				<!--<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-green">
+							<i class="fa fa-flag-o"></i>
+						</span>
+						<div class="info-box-content">
+							<span class="info-box-text">渠道数量</span>
+							<span class="info-box-number">
+								{$count.channel}
+							</span>
+						</div>
+					</div>
+				</div>-->
+
+
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="box box-info">
+						<div class="box-body">
+							<div class="box-content">
+								<h3 class="text-center">
+									<b>『{:date('Y-m-d',$affInfo['addtime'])}』{$affInfo.title}</b>
+								</h3>
+								<div style="font-size:18px;width:90%;margin-left: 4%;margin-bottom: 30px;padding: 10px;" class="text-left">
+									{$affInfo.content}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="container-fluid">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									<i class="fa fa-list"></i>
+									公告列表
+									<a href="{:U('Channel/channelAffiche')}"  class="pull-right" style="font-size: 14px;color: #3C8DBC" >
+                                更多公告信息
+                            </a>
+								</h3>
+							</div>
+
+							<div class="panel-body">
+								<empty name="affList">
+									<p class="goods_title">抱歉暂时没有相关结果！</p>
+									<else />
+									<form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover">
+												<tbody>
+												<volist name="affList" id="list">
+													<tr style="">
+														<td class="text-left">
+															<a href="javascript:void(0);" onclick="affdetail('{:U('Affiche/affDetail',array('id'=>$list['id']))}',800,500)">
+																{$list.title}
+															</a>
+														</td>
+														<td class="text-right">{:date('Y-m-d H:i:s',$list['addtime'])}</td>
+													</tr>
+												</volist>
+												</tbody>
+											</table>
+										</div>
+									</form>
+									<div class="row">
+										<div class="col-sm-3 text-left"></div>
+										<div class="col-sm-9 text-right">{$page}</div>
+									</div>
+								</empty>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			</section>
+		</div>
+	<script>
+        //公告信息详情
+        function affdetail(url,w,h){
+            layer.open({
+                type: 2,
+                area: [w+'px', h +'px'],
+                fix: false, //不固定
+                maxmin: true,
+                shade:0.4,
+                content: url
+            });
+        }
+	</script>
+	</body>
+</html>

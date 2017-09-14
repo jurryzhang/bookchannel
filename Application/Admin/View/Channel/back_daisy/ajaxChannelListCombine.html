@@ -1,0 +1,152 @@
+<empty name="channelList">
+    <p class="goods_title">抱歉暂时没有相关结果！</p>
+    <else />
+    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <!-- <td class="text-center">
+                        ID
+                    </td>-->
+
+                    <td class="text-center">
+                        代理名称
+                    </td>
+					
+					   <td class="text-center">
+                        佣金比例
+                    </td>
+
+                    <td class="text-right">
+                        今日充值金额
+                    </td>
+                    <td class="text-center">
+                        今日新增用户
+                    </td>
+
+                    <td class="text-right">
+                        今日新增关注
+                    </td>
+
+                    <td class="text-center">
+                        新增用户
+                    </td>
+
+                    <td class="text-right">
+                        新增关注
+                    </td>
+
+                 
+
+                    <if condition = "$ischannel eq 1">
+                        <td class="text-center">
+                            成本
+                        </td>
+                    </if>
+
+                    <td class="text-right">
+                        总充值金额
+                    </td>
+
+                    <td class="text-center">
+                        操作
+                    </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="channelList" id="list">
+                    <tr>
+                       <!-- <td class="text-center">
+                            {$list.channelid}
+                        </td>-->
+
+                        <td class="text-center">
+                            <a href="{:U('Admin/channel/ptList',array('id' => $list['channelid']))}">
+                                <span  style="font-size:14px;">{$list.channelname}</span>
+                            </a>
+                        </td>
+						
+						 <td class="text-center">
+                           <span  style="font-size:14px;"> {$list.proportion}</span>
+                        </td>
+
+                        <td class="text-right">
+                            <span  style="font-size:14px;">{$list.daysumpaybyid}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;">{$list.todaypaylogsum}笔</p>
+                        </td>
+
+                        <td class="text-center">
+                            <span  style="font-size:14px;">{$list.todayusersum}</span>
+                        </td>
+
+                        <td class="text-right">
+                            <span  style="font-size:14px;">{$list.todayfollowusersum}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;">关注率 {$list['todayfollowusersum']/$list['todayusersum']*100|round=###,0}%</p>
+                        </td>
+
+                        <td class="text-center">
+                            <span  style="font-size:14px;">{$list.usersum}</span>
+                        </td>
+
+                        <td class="text-right">
+                            <span  style="font-size:14px;">{$list.followusersum}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;">关注率 {$list['followusersum']/$list['usersum']*100|round=###,0}%</p>
+                        </td>
+
+                       
+
+                        <td class="text-center">
+                            <span  style="font-size:14px;">{$list.cost}</span>
+                        </td>
+
+                        <td class="text-right">
+                            <!-- {$list['paidmoney']/$list['proportion']+$list['remainmoney']|round=###,2} -->
+							<span  style="font-size:14px;">{$list.channelSumpay}</span>
+                            <p style="color:#aaa;font-size:12px;margin-top:4px;"> {$list.paylogsum}笔</p>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="{:U('Admin/Channel/editSChannel',array('id' => $list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-success" data-original-title="编辑信息" target="rightContent">
+                                <span>编辑</span>
+                            </a>
+
+                            <a href="{:U('Channel/remainMoney',array('channelid'=>$list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-success" data-original-title="结算统计" target="rightContent">
+                                <span>结算</span>
+                            </a>
+
+                            <a href="{:U('Admin/User/channelPayLogListByChannleID',array('id' => $list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情" target="rightContent">
+                                <span>充值</span>
+                            </a>
+                            <a href="{:U('Admin/User/channelUserListByChannleID',array('id' => $list['channelid']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情" target="rightContent">
+                                <span>用户</span>
+                            </a>
+
+                        </td>
+                    </tr>
+                </volist>               
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-sm-3 text-left"></div>
+        <div class="col-sm-9 text-right">{$page}</div>
+    </div>
+</empty>
+<script>
+    // 点击分页触发的事件
+    $(".pagination  a").click(function()
+    {
+        cur_page = $(this).data('p');
+
+        ajax_get_table('search-form2',cur_page);
+    });
+	
+</script>
+<script>
+    $(function(){
+        $('.table').setTableColor('#F9F9F9','#F9F9F9');
+    });
+</script>

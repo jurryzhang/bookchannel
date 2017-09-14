@@ -1,0 +1,291 @@
+
+<include file="Public/min-header"/>
+<script src="/Public/js/clipboard.min.js"></script>
+<div class="wrapper">
+
+        <include file="Public/breadcrumb"/>
+
+
+    <style>#search-form > .form-group{margin-left: 10px;}</style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回">
+                        <i class="fa fa-reply">
+                        </i>
+                    </a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>
+                        广告列表
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+                    <if condition="$Think.cookie.uid gt 0">
+                    <div class="navbar navbar-default">
+                        <form action="__CONTROLLER__/titleList/" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                                <button type="button" onclick="location.href='__CONTROLLER__/adAdd.html'" class="btn btn-primary pull-left">
+                                    <i class="fa fa-plus"></i>添加广告
+                                </button>
+                            <?php if(($_COOKIE['pid']== 0)AND($_COOKIE['permissions']== 0)){ ?>
+                            <div class="form-group" style="margin-right: 50px;float: right">
+                                <strong>本站广告计划:</strong>
+                                <select id="adplan" name="adplan" class="form-control" style="width: 150px; display: inline-block;" onchange="setAdplan()">
+                                    <option value="0"  <if condition="($adplan eq '0')"> selected="selected" </if> >系统广告</option>
+                                    <option value="1" <if condition="($adplan eq '1')">selected="selected"</if> >本站公众号</option>
+                                    <option value="2" <if condition="($adplan eq '2')">selected="selected"</if> >自定义广告</option>
+                                    <option value="3" <if condition="($adplan eq '3')">selected="selected"</if> >关闭广告</option>
+                                </select>
+                            </div>
+                            <?php } ?>
+                        </form>
+                    </div>
+                    </if>
+                    <empty name="adlist">
+                        <p class="goods_title">抱歉暂时没有相关结果！</p>
+                        <else />
+                        <form method="post" enctype="multipart/form-data" target="_blank" id="form-pic">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <if condition="$Think.cookie.permissions eq 1">
+                                        <td class="text-center">
+                                            ID
+                                        </td>
+                                        </if>
+
+                                        <td class="text-center">
+                                            广告标题
+                                        </td>
+
+                                        <td class="text-center">
+                                            广告展现时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            添加时间
+                                        </td>
+
+                                        <td class="text-center">
+                                            广告类型
+                                        </td>
+                                        <td class="text-center">
+                                           状态
+                                        </td>
+                                        <td class="text-center">
+                                            操作
+                                        </td>
+                                        <td class="text-center">
+                                            默认
+                                        </td>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="adlist" id="list">
+                                        <tr onmouseover="isdefaultO({$list.id})" onmouseleave="isdefaultL({$list.id})">
+                                            <if condition="$Think.cookie.permissions eq 1">
+                                            <td class="text-center">
+                                                {$list.id}
+                                            </td>
+                                            </if>
+
+                                            <td class="text-center">
+                                                {$list.title}
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                {$list.starttime|date='Y-m-d H:i:s',###} ----- {$list.endtime|date='Y-m-d H:i:s',###}
+                                            </td>
+                                            <td class="text-center">
+                                                {$list.addtime|date='Y-m-d H:i:s',###}
+                                            </td>
+
+                                            <td class="text-center">
+                                                <if condition="$list.adtype eq 1">
+                                                    微信关注卡
+                                                    <elseif  condition="$list.adtype eq 2" />
+                                                    图文广告
+                                                    <elseif   condition="$list.adtype eq 3"/>
+                                                    图片广告
+                                                    <else/>
+                                                    其他
+                                                </if>
+
+                                            </td>
+                                            <td class="text-center">
+                                                <if condition="$list.display eq 1">
+                                                    <a href="javascript:void(0)" onclick="setDisplay(this,{$list.id})" data-display="{$list.display}" class="btn btn-success btn-xs"" >
+                                                    <span>已启用</span>
+                                                    </a>
+                                                    <else/>
+                                                    <a href="javascript:void(0)" onclick="setDisplay(this,{$list.id})"  data-display="{$list.display}" class="btn btn-danger btn-xs"" >
+                                                    <span>已屏蔽</span>
+                                                    </a>
+
+                                                </if>
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                    <a href="__CONTROLLER__/adEdit/id/{$list.id}.html"  title="" class="btn btn-success" data-original-title="发送消息">
+                                                        <span>编辑</span>
+                                                    </a>
+                                                    <a href="javascript:void (0)" onclick="del({$list.id},this);" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除任务">
+                                                        <span>删除</span>
+                                                    </a>
+                                            </td>
+
+                                            <td  class="text-center">
+
+                                                <if condition="$list.isdefault eq 1">
+                                                    <span style="border-radius: 3px; padding: 2px 5px;font-size: 8px;border: 1px solid #f30;color:#f30;background: #ffd6cc;">默认广告</span>
+                                                 <else/>
+                                                    <a href="__CONTROLLER__/setDefault/id/{$list.id}/cid/{$list.channelid}.html"  id="isdefault{$list.id}" class="btn btn-warning btn-xs " style="display: none" >
+                                                        <span>设为默认</span>
+                                                    </a>
+                                                </if>
+
+                                            </td>
+
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-9 text-right">{$page}</div>
+                        </div>
+                    </empty>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+
+    function del(id,obj)
+    {
+        layer.confirm('确定要删除吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/adDel/id/"+id,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                                $(obj).parent().parent().remove();
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+        return false;
+    }
+
+
+
+
+
+    function setAdplan()
+    {
+       var plan= $('#adplan option:selected').val();
+        layer.confirm('确定要更改广告计划吗?',
+            function(){
+                $.ajax(
+                    {
+                        url     : "__CONTROLLER__/setAdplan/plan/"+plan,
+                        success : function(v)
+                        {
+                            if(v.status==1){
+                                layer.msg(v.info, {icon: 1,time: 1000});
+                            }else {
+                                layer.msg(v.info, {icon: 2,time: 1000});
+                            }
+                        }
+                    });
+            }
+
+        );
+        return false;
+    }
+
+    function setDisplay(obj,id)
+    {
+        var display= $(obj).attr('data-display')*1;
+        console.log(display);
+        if(display){
+            layer.confirm('确定要把当前广告屏蔽吗?',
+                function(){
+                    ajaxSetDisplay(!display,id,obj);
+                }
+
+            );
+        }else{
+            layer.confirm('确定要更改这条广告状态为显示状态?',
+                function(){
+                    ajaxSetDisplay(!display,id,obj);
+                }
+
+            );
+        }
+
+    }
+function ajaxSetDisplay(display,id,obj) {
+        if(display){
+            display=1;
+        }else {
+            display=0;
+        }
+    $.ajax(
+        {
+            url     : "__CONTROLLER__/setDisplay/id/"+id+"/display/"+display,
+            success : function(v)
+            {
+                if(v.status==1){
+                    layer.msg(v.info, {icon: 1,time: 1000});
+                    if(display){
+                       $(obj).attr('data-display','1');
+                       $(obj).removeClass('btn-danger');
+                       $(obj).addClass('btn-success');
+                       $(obj).html('<span>已启用</span>');
+                    }else {
+                        $(obj).attr('data-display','0');
+                        $(obj).removeClass('btn-success');
+                        $(obj).addClass('btn-danger');
+                        $(obj).html('<span>已屏蔽</span>');
+
+                    }
+
+                }else {
+                    layer.msg(v.info, {icon: 2,time: 1000});
+                }
+            }
+        });
+}
+
+function isdefaultO(id) {
+    $('#isdefault'+id).css('display','');
+}
+
+function isdefaultL(id) {
+    $('#isdefault'+id).css('display','none');
+}
+
+</script>
+</body>
+</html>

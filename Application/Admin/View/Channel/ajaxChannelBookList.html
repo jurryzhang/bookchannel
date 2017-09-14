@@ -1,0 +1,80 @@
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <td class="text-center">
+                    <a href="javascript:sort('articleid');">bookID</a>
+                </td>
+
+                <td class="text-center">
+                     小说名称
+                </td>
+
+                <td class="text-center">
+                    订阅（元）
+                </td>
+
+                <td class="text-center">
+                     打赏（元）
+                </td>
+
+                <td class="text-center">
+                    <a href="javascript:sort('sumhurry');">催更（元）</a>
+                </td>
+
+                <td class="text-center">
+                    <a href="javascript:sort('sumemoney');">总收益（元）</a>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+                <volist name="articlelist" id="list">
+                    <tr>
+                        <td class="text-center">
+                            <a href="http://www.mianfeidushu.com/info/{$list.id}.html" target="_blank">
+                                {$list.id}
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="http://www.mianfeidushu.com/info/{$list.id}.html" target="_blank">
+                                {$list.articlename}
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                            {$list.sumsale}
+                        </td>
+
+                        <td class="text-center">
+                            {$list.sumtip}
+                        </td>
+
+                        <td class="text-center">
+                            {$list.sumhurry}
+                        </td>
+
+                        <td class="text-center">
+                            {$list.sumemoney}
+                        </td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>
+<script>
+
+    // 点击分页触发的事件
+    $(".pagination  a").click(function()
+    {
+        cur_page = $(this).data('p');
+
+        ajax_get_table('search-form2',cur_page);
+    });
+</script>

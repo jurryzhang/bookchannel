@@ -1,0 +1,37 @@
+<include file="Public/min-header" />
+<div class="wrapper">
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    <div class="box-content">
+                        <div style="font-size:18px;margin-bottom: 30px;padding: 10px;" class="text-left">
+                            <strong style="font-size: 24px">{$chapterInfo.chaptername}</strong>
+                            <br/>
+                            <p>{$content}</p>
+                            <if condition="$chapterInfo['prevchapter'] neq -1">
+                                <a class="btn btn-primary" href="{:U('Doc/chapterContent',array('chapterId' => $chapterInfo['prevchapter'],'articleId' => $chapterInfo['articleid']))}">上一章</a>
+                                <else/>
+                                <a class="btn btn-primary" href="javascript:void:(0)" onclick="alertMsg('当前章节已经是第一章')">上一章</a>
+                            </if>
+                            <if condition="$chapterInfo['nextchapter'] gt 1">
+                                <a class="btn btn-primary" href="{:U('Doc/chapterContent',array('chapterId' => $chapterInfo['nextchapter'],'articleId' => $chapterInfo['articleid']))}">下一章</a>
+                                <else/>
+                                <a class="btn btn-primary" href="javascript:void:(0)" onclick="alertMsg('已经是最后一章')">下一章</a>
+                            </if>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    function alertMsg(msg){
+        layer.msg(msg,{icon:5});
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<aside class="main-sidebar"   style="overflow:auto;margin:0 auto;display:block;background-color: #222d32;" >
+	<section class="sidebar">
+        <ul class=" sidebar-menu">
+        	<if condition="($Think.cookie.permissions eq 0) ">
+				<li onclick="makecss(this)" class="menu_list">
+	            	<a href="{:U('Channel/channelAffiche')}" target='rightContent'>
+	              		<i class="fa fa-bullhorn"></i>
+	              		<span >公告信息</span>
+	              		
+	            	</a>
+
+        		</li>
+        	<elseif condition="$Think.cookie.permissions eq 1"/>
+        		<li onclick="makecss(this)" class="menu_list">
+	            	<a href="{:U('Affiche/affList')}" target='rightContent'>
+	              		<i class="fa fa-bullhorn"></i>
+	              		<span >公告信息</span>
+	              		
+	            	</a>
+
+        		</li>
+        	</if>	
+        		<li onclick="makecss(this)" class="menu_list">
+	            	<a href="{:U('Index/welcome')}" target='rightContent'>
+	              		<i class="fa fa-bar-chart"></i>
+	              		<span >数据统计</span>
+	              		
+	            	</a>
+
+        		</li>
+        		<li onclick="makecss(this)" class="menu_list">
+					<a href="{:U('Doc/bookList')}" target='rightContent'>
+	              		<i class="fa fa-book"></i>
+	              		<span >小说列表</span>
+	              		
+	            	</a>
+
+        		</li>
+				<if condition="($Think.cookie.permissions eq 0) ">
+					
+        		    <li onclick="makecss(this)" class="menu_list">
+						<a href="{:U('Channel/ptList')}" target='rightContent'>
+		              		<i class="fa fa-link"></i>
+		              		<span >推广链接</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <if condition="($Think.cookie.cpid eq 0) ">
+	        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="{:U('Channel/channelListCombine',array('id'=>$_COOKIE['channelid'],'issum'=>1))}" target='rightContent'>
+			              		<i class="fa fa-user-plus"></i>
+			              		<span >代理管理</span>
+			              		
+			            	</a>
+
+		        		</li>
+	        		</if>
+	        		<li onclick="makecss(this)" class="menu_list">
+						 <a href="{:U('User/channelPayLogListByChannleID',array('id'=>$_COOKIE['channelid'],'issum'=>1))}" target='rightContent'> 
+						
+		              		<i class="fa fa-file-excel-o"></i>
+		              		<span >订单管理</span>
+		              		
+		            	</a>
+	            	</li>
+        		    <if condition="($Think.cookie.cpid eq 0)">
+	        		    <li onclick="makecss(this)" class="menu_list">
+							<a href="{:U('User/userSearch')}" target='rightContent'>
+			              		<i class="fa fa-search"></i>
+			              		<span >用户查询</span>
+			              		
+			            	</a>
+
+	        		    </li>
+        		    </if>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="Channel/remainMoney/channelid/{$Think.cookie.channelid}/issum/1.html" target='rightContent'>
+		              		<i class="fa fa-money"></i>
+		              		<span >我的结算单</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    
+        		    
+        		    	 <if condition="($Think.cookie.channelid eq 119)">
+
+	        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="Channel/getNextRemainMoney/channelid/{$Think.cookie.channelid}/issum/1.html" target='rightContent'>
+			              		<i class="fa fa-money"></i>
+			              		<span >代理结算单</span>
+			              		
+			            	</a>
+
+	        		    </li>
+	        		    </if> 
+	        		    <if condition="($Think.cookie.cpid eq 0)">
+        		    	<li onclick="makecss(this)" class="menu_list">
+			            	<a href="{:U('Channel/tplList')}" target='rightContent'>
+			              		<i class="fa fa-comments-o"></i>
+			              		<span >模板消息</span>
+			              		
+			            	</a>
+
+	        		    </li>
+	        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="{:U('Channel/keywordList')}" target='rightContent'>
+			              		<i class="fa fa-reply"></i>
+			              		<span >关键词回复</span>
+			              		
+			            	</a>
+
+	        		    </li>
+	        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="{:U('BookSale/promotionList')}" target='rightContent'>
+			              		<i class="fa fa-shopping-cart"></i>
+			              		<span >促销活动</span>
+			              		
+			            	</a>
+
+	        		    </li>
+	        		    
+        		    </if>
+        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="{:U('Channel/commonUrl')}" target='rightContent'>
+			              		<i class="fa fa-paperclip"></i>
+			              		<span >常用链接</span>
+			              		
+			            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Channel/channelBankinfo')}" target='rightContent'>
+		              		<i class="fa fa-credit-card"></i>
+		              		<span >收款信息</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <if condition="$Think.cookie.cpid gt 0">
+	        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="{:U('Admin/lectures')}" target='rightContent'>
+			              		<i class="fa fa-file-pdf-o"></i>
+			              		<span >推广教程</span>
+			              		
+			            	</a>
+
+	        		    </li>
+        		    </if>
+	            	
+        		    
+        		    <if condition="($Think.cookie.cpid eq 0)">
+	        		   
+	        		    <li class="treeview" >
+							<a href="javascript:void(0)">
+			              		<i class="fa fa-briefcase"></i>
+			              		<span >网站配置</span>
+			              		<i class="fa fa-angle-left pull-right"></i>
+			            	</a>
+
+			            	<ul class="treeview-menu">
+			            		
+			            			<li onclick="makecss(this)" class="menu_list">
+			            				<a href="{:U('Channel/wxSet')}" target='rightContent'>
+				            				<i class="fa fa-wechat"></i>公众号配置
+			            				</a>
+			            			</li>
+			            			<li onclick="makecss(this)" class="menu_list">
+						            	<a href="{:U('Channel/wxMenu')}" target='rightContent'>
+						              		<i class="fa fa-navicon"></i>
+						              		<span >生成菜单</span>
+						              		
+						            	</a>
+
+				        		    </li>
+			            	</ul>
+		        		</li>
+	        		    
+        		    </if>
+        		   
+        		    
+        		    <if condition="($Think.cookie.permissions eq 0)">
+        		    	<li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('User/editMyPass')}" target='rightContent'>
+		              		<i class="fa fa-pencil-square-o"></i>
+		              		<span >修改密码</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    </if>
+
+        		<elseif condition="($Think.cookie.permissions eq 1)"/>
+
+        			<li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Channel/channelList')}" target='rightContent'>
+		              		<i class="fa fa-sitemap"></i>
+		              		<span >渠道列表</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+			            	<a href="Channel/getNextRemainMoney/channelid/{$Think.cookie.channelid}/issum/1.html" target='rightContent'>
+			              		<i class="fa fa-money"></i>
+			              		<span >代理结算单</span>
+			              		
+			            	</a>
+
+	        		    </li>
+        			<!-- <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Channel/channelInfoList')}" target='rightContent'>
+		              		<i class="fa fa-send"></i>
+		              		<span >渠道推广信息</span>
+		              		
+		            	</a>
+
+        		    </li> -->
+					<li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('User/channelUserAccessLog')}" target='rightContent'>
+		              		<i class="fa fa-street-view"></i>
+		              		<span >渠道用户访问记录</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('BookSale/bookSaleListByChannelID')}" target='rightContent'>
+		              		<i class="fa fa-cny"></i>
+		              		<span >渠道销售列表</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('BookSale/bookSaleList')}" target='rightContent'>
+		              		<i class="fa fa-th-list"></i>
+		              		<span >书籍销售列表</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('BookSale/promotionList')}" target='rightContent'>
+		              		<i class="fa fa-shopping-cart"></i>
+		              		<span >促销活动</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Doc/giftsList')}" target='rightContent'>
+		              		<i class="fa fa-money"></i>
+		              		<span >打赏记录</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Doc/urgeList')}" target='rightContent'>
+		              		<i class="fa fa-rss"></i>
+		              		<span >催更记录</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Doc/commentList')}" target='rightContent'>
+		              		<i class="fa fa-comment-o"></i>
+		              		<span >评论记录</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('User/payLogList')}" target='rightContent'>
+		              		<i class="fa fa-diamond"></i>
+		              		<span >充值记录</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('User/userList')}" target='rightContent'>
+		              		<i class="fa fa-users"></i>
+		              		<span >用户列表</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('User/userAccessLogList')}" target='rightContent'>
+		              		<i class="fa fa-street-view"></i>
+		              		<span >用户访问记录</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li class="treeview" >
+        		    	<a href="javascript:void(0)">
+		              		<i class="fa fa-folder"></i>
+		              		<span >文案模板管理</span>
+		              		<i class="fa fa-angle-left pull-right"></i>
+	            		</a>
+	            		<ul class="treeview-menu">
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/picList')}" target='rightContent'>
+				              		<i class="fa fa-image"></i>
+				              		<span >图片列表</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/picAdd')}" target='rightContent'>
+				              		<i class="fa fa-file-image-o"></i>
+				              		<span >图片添加</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/titleList')}" target='rightContent'>
+				              		<i class="fa fa-header"></i>
+				              		<span >文案标题列表</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/titleAdd')}" target='rightContent'>
+				              		<i class="fa fa-font"></i>
+				              		<span >文案标题添加</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/contAdd')}" target='rightContent'>
+				              		<i class="fa fa-text-width"></i>
+				              		<span >正文模板添加</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/contList')}" target='rightContent'>
+				              		<i class="fa fa-bold"></i>
+				              		<span >正文模板列表</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/foucsList')}" target='rightContent'>
+				              		<i class="fa fa-circle-o"></i>
+				              		<span >引导模板列表</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Source/foucsAdd')}" target='rightContent'>
+				              		<i class="fa fa-crop"></i>
+				              		<span >引导模板添加</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		</ul>    
+	        		</li>    
+        		    <li onclick="makecss(this)" class="menu_list">
+		            	<a href="{:U('Source/removeOffShelfBook')}" target='rightContent'>
+		              		<i class="fa fa-trash-o"></i>
+		              		<span >清除下架书籍</span>
+		              		
+		            	</a>
+
+        		    </li>
+        		    <li class="treeview" >
+        		    	<a href="javascript:void(0)">
+		              		<i class="fa fa-caret-square-o-left"></i>
+		              		<span >广告管理</span>
+		              		<i class="fa fa-angle-left pull-right"></i>
+	            		</a>
+	            		<ul class="treeview-menu">
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Ad/adList')}" target='rightContent'>
+				              		<i class="fa fa-list-ul"></i>
+				              		<span >广告列表</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Ad/adStats')}" target='rightContent'>
+				              		<i class="fa fa-line-chart"></i>
+				              		<span >广告统计</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		    <li onclick="makecss(this)" class="menu_list">
+				            	<a href="{:U('Ad/adSwitch')}" target='rightContent'>
+				              		<i class="fa fa-toggle-on"></i>
+				              		<span >广告权限管理</span>
+				              		
+				            	</a>
+
+		        		    </li>
+		        		</ul>
+		        	</li>	    
+        		</if>
+        		
+	      	   
+		</ul>
+	</section>
+</aside>
