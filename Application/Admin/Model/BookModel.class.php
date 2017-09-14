@@ -272,10 +272,15 @@ class BookModel extends Model
                 break;    
             }
             $sortid=array();
-            foreach ($jieqiSort['article'] as $k=>$v ){
-                if($v['group']==$group){
-                    $sortid[]=$k;
+            if($group != 3) {
+                foreach ($jieqiSort['article'] as $k => $v) {
+                    if ($v['group'] == $group) {
+                        $sortid[] = $k;
+                    }
                 }
+            }else
+            {
+                $sortid = array_keys($jieqiSort['article']);
             }
             $sortid=implode(',',$sortid);
             return $sortid;

@@ -17,7 +17,7 @@ return array(
 	'HTML_CACHE_ON'           => true, // 开启静态缓存
     'HTML_CACHE_TIME'         => 60,   // 全局静态缓存有效期（秒）
 	
-	'DIR_PATH'                => 'D:\\\\xampp\\\\htdocs\\\\bacoolread\\\\configs\\\\article\\\\',//文件夹路径
+	'DIR_PATH'                => 'D:\\\\www\\\\bacoolread\\\\configs\\\\article\\\\',//文件夹路径
 	
 	'FIRST_SORT_FILE_PATH'    => 'filter.php',
 	'SECONDE_SORT_FILE_PATH'  => 'sort.php',
